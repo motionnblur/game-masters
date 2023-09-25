@@ -21,12 +21,12 @@ export default function Signup(props) {
           placeholder=" First Name"
         />
         <input
-          type="password"
+          type="text"
           className="w-[240px] h-[45px] bg-slate-500 mt-[15px]"
           placeholder=" Last Name"
         />
         <input
-          type="password"
+          type="text"
           className="w-[240px] h-[45px] bg-slate-500 mt-[15px]"
           placeholder=" Email"
         />
