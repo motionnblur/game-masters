@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function Login() {
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        alert("esc pressed");
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <div className="absolute flex h-full w-full items-center justify-center bg-black/[.5]">
       <div className="w-[280px] h-[253px] bg-slate-300 flex flex-col items-center mb-[220px]">
