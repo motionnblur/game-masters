@@ -3,8 +3,11 @@ import { useState } from "react";
 import Login from "../../components/Login";
 export default function Home() {
   const [loginForm, setLoginForm] = useState(false);
-  const OpenLoginForm = () => {
+  const openLoginForm = () => {
     setLoginForm(true);
+  };
+  const closeLoginForm = () => {
+    setLoginForm(false);
   };
   return (
     <div className="w-full h-full bg-slate-800 flex">
@@ -12,7 +15,7 @@ export default function Home() {
         <div className="w-[540px] h-[800px] bg-slate-600 flex flex-col">
           <div
             className="bg-gray-900 w-full h-1/6 flex justify-center items-center cursor-pointer"
-            onClick={OpenLoginForm}
+            onClick={openLoginForm}
           >
             <b className="text-slate-200 pointer-events-none">
               Do you already have an account ?
@@ -34,7 +37,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {loginForm && <Login />}
+      {loginForm && <Login closeLoginForm={closeLoginForm} />}
     </div>
   );
 }

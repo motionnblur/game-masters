@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 
-export default function Login() {
+export default function Login(props) {
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
-        alert("esc pressed");
+        props.closeLoginForm();
       }
     };
     document.addEventListener("keydown", handleKeyDown);
