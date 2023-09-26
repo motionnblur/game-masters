@@ -1,13 +1,9 @@
 import React, { useEffect, useRef } from "react";
+import validateEmail from "../api/Regex";
 
 export default function Login(props) {
   const mailRef = useRef(null);
   const passRef = useRef(null);
-
-  const validateEmail = (email) => {
-    const regex = /[\w.]+@gmail\.com$/;
-    return regex.test(email);
-  };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
