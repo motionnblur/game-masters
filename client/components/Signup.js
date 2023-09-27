@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import validateEmail from "../api/Regex";
+import axios from "axios";
 
 export default function Signup(props) {
+  const url = "http://localhost:8080/api/create_user";
   const nameRef = useRef(null);
   const lastnameRef = useRef(null);
   const mailRef = useRef(null);
@@ -26,7 +28,16 @@ export default function Signup(props) {
 
     if (!validateEmail(mailRef.current.value)) return;
 
-    alert("sending");
+    axios
+      .post(url, {
+        userName: nameRef.current.value,
+        lastName: lastnameRef.current.value,
+        mail: mailRef.current.value,
+        passw: passRef.current.value,
+      })
+      .then((res) => {
+        alert(res.data);
+      });
   };
 
   return (
