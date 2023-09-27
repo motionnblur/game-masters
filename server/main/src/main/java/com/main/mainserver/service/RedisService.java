@@ -16,9 +16,9 @@ public class RedisService {
         this.redisConnectionFactory = redisConnectionFactory;
     }
 
-    public void saveBasicVariable(String key, String value) {
+    public void saveBasicVariable(String value) {
         RedisConnection redisConnection = redisConnectionFactory.getConnection();
-        redisConnection.stringCommands().set(key.getBytes(), value.getBytes());
+        redisConnection.setCommands().sAdd("users".getBytes(), value.getBytes());
         redisConnection.close();
     }
 

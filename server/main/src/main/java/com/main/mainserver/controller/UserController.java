@@ -65,7 +65,7 @@ public class UserController {
         Cookie jwtTokenCookie = new Cookie("user-id", userMail);
         response.addCookie(jwtTokenCookie);
 
-        redisService.saveBasicVariable(userMail, "1");
+        redisService.saveBasicVariable(userMail);
 
         return "successful";
     }
