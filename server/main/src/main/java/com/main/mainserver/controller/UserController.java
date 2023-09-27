@@ -2,6 +2,7 @@ package com.main.mainserver.controller;
 
 import com.main.mainserver.dao.LoginDao;
 import com.main.mainserver.entity.UserEntity;
+import com.main.mainserver.service.RedisService;
 import com.main.mainserver.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    RedisService redisService;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @PostMapping("/api/create_user")
@@ -61,6 +64,8 @@ public class UserController {
 
         Cookie jwtTokenCookie = new Cookie("user-id", userMail);
         response.addCookie(jwtTokenCookie);
+
+        redisService.saveBasicVariable("user", userMail);
 
         return "successful";
     }
