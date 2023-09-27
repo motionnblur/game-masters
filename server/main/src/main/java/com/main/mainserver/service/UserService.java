@@ -5,6 +5,9 @@ import com.main.mainserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Service
 public class UserService {
     @Autowired
@@ -23,5 +26,11 @@ public class UserService {
     }
     public UserEntity findByUserMail(String userMail){
         return userRepository.findByMail(userMail);
+    }
+
+    public boolean validateEmail(String email) {
+        Pattern pattern = Pattern.compile("^[\\w.]+@gmail\\.com$");
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 }

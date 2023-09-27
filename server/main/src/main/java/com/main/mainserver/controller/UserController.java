@@ -17,6 +17,10 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     @PostMapping("/api/create_user")
     private String createUser(@RequestBody UserEntity userEntity) {
+        if(userEntity.getUserName() == null || userEntity.getPassw() == null || userEntity.getMail() == null || userEntity.getLastName() == null)
+            return "null";
+        if(!userService.validateEmail(userEntity.getMail()))
+            return "please write a correct mail";
         try {
             String hashedPassword = passwordEncoder.encode(userEntity.getPassw());
 
@@ -33,6 +37,11 @@ public class UserController {
     }
     @PostMapping("/api/login_user")
     private String loginUser(@RequestBody LoginDao loginDao){
+        if(loginDao.getPassw() == null || loginDao.getMail() == null)
+            return "null";
+        if(!userService.validateEmail(loginDao.getMail()))
+            return "please write a correct mail";
+
         String userMail = loginDao.getMail();
         String userPassw = loginDao.getPassw();
 
