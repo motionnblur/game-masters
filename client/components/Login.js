@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import validateEmail from "../api/Regex";
+import axios from "axios";
 
 export default function Login(props) {
+  const url = "http://localhost:8080/api/login_user";
   const mailRef = useRef(null);
   const passRef = useRef(null);
 
@@ -22,7 +24,14 @@ export default function Login(props) {
 
     if (!validateEmail(mailRef.current.value)) return;
 
-    alert("sending");
+    axios
+      .post(url, {
+        mail: mailRef.current.value,
+        passw: passRef.current.value,
+      })
+      .then((res) => {
+        alert(res.data);
+      });
   };
 
   return (
