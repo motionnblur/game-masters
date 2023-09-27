@@ -18,4 +18,10 @@ public class RedisService {
         redisConnection.stringCommands().set(key.getBytes(), value.getBytes());
         redisConnection.close();
     }
+    public String getValue(String key) {
+        RedisConnection redisConnection = redisConnectionFactory.getConnection();
+        byte[] value = redisConnection.stringCommands().get(key.getBytes());
+        redisConnection.close();
+        return value.toString();
+    }
 }
