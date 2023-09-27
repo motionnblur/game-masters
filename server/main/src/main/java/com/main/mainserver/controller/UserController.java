@@ -3,6 +3,9 @@ package com.main.mainserver.controller;
 import com.main.mainserver.dao.LoginDao;
 import com.main.mainserver.entity.UserEntity;
 import com.main.mainserver.service.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -41,7 +44,7 @@ public class UserController {
         }
     }
     @PostMapping("/api/login_user")
-    private String loginUser(@RequestBody LoginDao loginDao){
+    private String loginUser(@RequestBody LoginDao loginDao, HttpServletResponse response){
         if(loginDao.getPassw() == null || loginDao.getMail() == null)
             return "null";
         if(!userService.validateEmail(loginDao.getMail()))
@@ -55,6 +58,9 @@ public class UserController {
         if(user == null) return "user could not be found";
         if(!passwordEncoder.matches(userPassw,user.getPassw()))
             return "password is wrong";
+
+        Cookie jwtTokenCookie = new Cookie("user-id", userMail);
+        response.addCookie(jwtTokenCookie);
 
         return "successful";
     }
