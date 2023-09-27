@@ -4,6 +4,9 @@ import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Set;
+
 @Service
 public class RedisService {
 
@@ -18,10 +21,13 @@ public class RedisService {
         redisConnection.stringCommands().set(key.getBytes(), value.getBytes());
         redisConnection.close();
     }
-    public String getValue(String key) {
+
+    public boolean isThere(String key) {
         RedisConnection redisConnection = redisConnectionFactory.getConnection();
-        byte[] value = redisConnection.stringCommands().get(key.getBytes());
+        boolean bool= Boolean.TRUE.equals(redisConnection.setCommands().sIsMember("users".getBytes(), key.getBytes()));
+        //System.out.println(values.stream().count());
         redisConnection.close();
-        return value.toString();
+
+        return bool;
     }
 }

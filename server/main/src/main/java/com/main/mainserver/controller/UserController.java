@@ -65,7 +65,7 @@ public class UserController {
         Cookie jwtTokenCookie = new Cookie("user-id", userMail);
         response.addCookie(jwtTokenCookie);
 
-        redisService.saveBasicVariable("user", userMail);
+        redisService.saveBasicVariable(userMail, "1");
 
         return "successful";
     }
@@ -77,10 +77,11 @@ public class UserController {
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("user-id")) {
                 String val = cookie.getValue();
-                if (val.equals("mavims3453@gmail.com"))
+
+                if (redisService.isThere(val))
                     return true;
             }
         }
-        return true;
+        return false;
     }
 }
