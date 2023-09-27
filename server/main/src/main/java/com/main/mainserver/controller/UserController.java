@@ -22,6 +22,9 @@ public class UserController {
         if(!userService.validateEmail(userEntity.getMail()))
             return "please write a correct mail";
         try {
+            if(userService.findByUserMail(userEntity.getMail()) != null)
+                return "user with that mail already exists";
+
             String hashedPassword = passwordEncoder.encode(userEntity.getPassw());
 
             UserEntity newUser = new UserEntity();
