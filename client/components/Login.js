@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import validateEmail from "../api/Regex";
 import axios from "axios";
+import { getCookie } from "cookies-next";
 
 export default function Login(props) {
   const url = "http://localhost:8080/api/login_user";
@@ -33,10 +34,16 @@ export default function Login(props) {
         },
         {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       )
       .then((response) => {
-        alert(response.data);
+        //const cookieValue = response.headers["set-cookie"];
+        const cookie = getCookie("user-id");
+        console.log(cookie);
+        //alert(response.data);
       });
   };
 

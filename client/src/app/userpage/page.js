@@ -8,12 +8,11 @@ export default function page() {
     axios
       .get(url, {
         withCredentials: true,
-        headers: {
-          Cookie: "user-id",
-        },
       })
       .then((res) => {
-        alert(res);
+        const cookieValue = res.headers["set-cookie"];
+        console.log(cookieValue);
+        //alert(res);
       });
   }, []);
   return (

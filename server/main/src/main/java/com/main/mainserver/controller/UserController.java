@@ -9,8 +9,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Duration;
 
 @CrossOrigin(value = "http://localhost:3000", allowCredentials = "true")
 @RestController
@@ -62,11 +66,18 @@ public class UserController {
         if (!passwordEncoder.matches(userPassw, user.getPassw()))
             return "password is wrong";
 
-        Cookie jwtTokenCookie = new Cookie("user-id", userMail);
-        response.addCookie(jwtTokenCookie);
+        //Cookie cookie = new Cookie("user-id", userMail);
 
-        //response.addHeader("Access-Control-Allow-Credentials: true",
-        //        "Access-Control-Allow-Origin: http://localhost:3000");
+        ResponseCookie cookie = ResponseCookie.from("user-id", userMail) // key & value
+                .httpOnly(false)
+                .secure(false)
+                .domain("localhost")
+                .path("/")
+                .maxAge(Duration.ofHours(1))
+                .sameSite("Strict")  // sameSite
+                .build()
+                ;
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         redisService.saveBasicVariable(userMail);
 
