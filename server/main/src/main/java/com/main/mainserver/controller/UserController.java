@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(value = "http://localhost:3000", allowCredentials = "true")
 @RestController
-@CrossOrigin(origins="*")
 public class UserController {
     @Autowired
     UserService userService;
@@ -64,6 +64,9 @@ public class UserController {
 
         Cookie jwtTokenCookie = new Cookie("user-id", userMail);
         response.addCookie(jwtTokenCookie);
+
+        //response.addHeader("Access-Control-Allow-Credentials: true",
+        //        "Access-Control-Allow-Origin: http://localhost:3000");
 
         redisService.saveBasicVariable(userMail);
 

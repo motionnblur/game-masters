@@ -25,12 +25,18 @@ export default function Login(props) {
     if (!validateEmail(mailRef.current.value)) return;
 
     axios
-      .post(url, {
-        mail: mailRef.current.value,
-        passw: passRef.current.value,
-      })
-      .then((res) => {
-        alert(res.data);
+      .post(
+        url,
+        {
+          mail: mailRef.current.value,
+          passw: passRef.current.value,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        alert(response.data);
       });
   };
 
