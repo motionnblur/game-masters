@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 export default function page() {
+  const router = useRouter();
   const url = "http://localhost:8080/api/authenticate";
   const [userName, setUserName] = useState("");
   useEffect(() => {
@@ -22,10 +24,12 @@ export default function page() {
         }
       )
       .then((res) => {
+        console.log(res.data);
         if (res.data) {
-          setUserName(getCookie("user-id"));
+          setUserName(res.data);
         } else {
-          alert("you are no allowed to see this page");
+          alert("you are not allowed to see this page");
+          router.push("/");
         }
       });
   }, []);

@@ -94,11 +94,12 @@ public class UserController {
     }
 
     @PostMapping("/api/authenticate")
-    private Boolean authenticateUser(@RequestBody AuthenticateDao autDao) {
-        if(autDao.getCookieData() == null) return false;
+    private String authenticateUser(@RequestBody AuthenticateDao autDao) {
+        if(autDao.getCookieData() == null) return "null";
+        if(!sessionRepository.existsById(autDao.getCookieData())) return "null";
         String userName = sessionRepository.findById(autDao.getCookieData()).get().getName();
 
-        if(userName == null) return false;
-        return true;
+        if(userName == null) return "null";
+        return userName;
     }
 }
