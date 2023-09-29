@@ -1,5 +1,6 @@
 package com.main.mainserver.controller;
 
+import com.main.mainserver.dao.AuthenticateDao;
 import com.main.mainserver.dao.LoginDao;
 import com.main.mainserver.entity.UserEntity;
 import com.main.mainserver.service.RedisService;
@@ -82,17 +83,7 @@ public class UserController {
     }
 
     @PostMapping("/api/authenticate")
-    private Boolean authenticateUser(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("user-id")) {
-                String val = cookie.getValue();
-
-                if (redisService.isThere(val))
-                    return true;
-            }
-        }
-        return false;
+    private Boolean authenticateUser(@RequestBody AuthenticateDao autDao) {
+        return (redisService.isThere(autDao.getCookieData()));
     }
 }
