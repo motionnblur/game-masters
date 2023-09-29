@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import java.util.UUID;
 
 import java.time.Duration;
 
@@ -70,7 +71,9 @@ public class UserController {
         if (!passwordEncoder.matches(userPassw, user.getPassw()))
             return "password is wrong";
 
-        ResponseCookie cookie = ResponseCookie.from("user-id", userMail) // key & value
+        String userId = UUID.randomUUID().toString();
+
+        ResponseCookie cookie = ResponseCookie.from("user-id", userId) // key & value
                 .httpOnly(false)
                 .secure(false)
                 .domain("localhost")
@@ -81,10 +84,8 @@ public class UserController {
                 ;
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        //redisService.saveBasicVariable(userMail);
-
         SessionEntity sEntity = new SessionEntity();
-        sEntity.setId("1234555");
+        sEntity.setId(userId);
         sEntity.setName("Hasan");
 
         sessionRepository.save(sEntity);
@@ -95,7 +96,9 @@ public class UserController {
     @PostMapping("/api/authenticate")
     private Boolean authenticateUser(@RequestBody AuthenticateDao autDao) {
         if(autDao.getCookieData() == null) return false;
-        System.out.println(sessionRepository.findById("12345").get().getName());
-        return (redisService.isThere(autDao.getCookieData()));
+        String userName = sessionRepository.findById(autDao.getCookieData()).get().getName();
+
+        if(userName == null) return false;
+        return true;
     }
 }
