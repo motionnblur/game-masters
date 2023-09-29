@@ -43,7 +43,7 @@ export default function Login(props) {
         //const cookieValue = response.headers["set-cookie"];
         const cookie = getCookie("user-id");
         console.log(cookie);
-        //alert(response.data);
+        alert(response.data);
       });
   };
 

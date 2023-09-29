@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import axios from "axios";
+import { getCookie } from "cookies-next";
 
 export default function page() {
   const url = "http://localhost:8080/api/authenticate";
@@ -10,7 +11,7 @@ export default function page() {
         withCredentials: true,
       })
       .then((res) => {
-        const cookieValue = res.headers["set-cookie"];
+        const cookieValue = getCookie("user-id");
         console.log(cookieValue);
         //alert(res);
       });
