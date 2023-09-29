@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from "react";
 import validateEmail from "../api/Regex";
 import axios from "axios";
 import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 export default function Login(props) {
+  const router = useRouter();
   const url = "http://localhost:8080/api/login_user";
   const mailRef = useRef(null);
   const passRef = useRef(null);
@@ -40,10 +42,11 @@ export default function Login(props) {
         }
       )
       .then((response) => {
-        //const cookieValue = response.headers["set-cookie"];
         const cookie = getCookie("user-id");
         console.log(cookie);
         alert(response.data);
+
+        router.push("/userpage");
       });
   };
 
