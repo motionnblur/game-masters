@@ -22,7 +22,11 @@ export default function page() {
         }
       )
       .then((res) => {
-        alert(res.data);
+        if (res.data) {
+          setUserName(getCookie("user-id"));
+        } else {
+          alert("you are no allowed to see this page");
+        }
       });
   }, []);
   return (

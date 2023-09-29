@@ -84,6 +84,7 @@ public class UserController {
 
     @PostMapping("/api/authenticate")
     private Boolean authenticateUser(@RequestBody AuthenticateDao autDao) {
+        if(autDao.getCookieData() == null) return false;
         return (redisService.isThere(autDao.getCookieData()));
     }
 }
