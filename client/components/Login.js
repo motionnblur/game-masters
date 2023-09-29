@@ -14,6 +14,8 @@ export default function Login(props) {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         props.closeLoginForm();
+      } else if (event.key === "Enter") {
+        sendToServer();
       }
     };
     document.addEventListener("keydown", handleKeyDown);
@@ -45,6 +47,8 @@ export default function Login(props) {
         const cookie = getCookie("user-id");
         console.log(cookie);
         alert(response.data);
+
+        if (response.data !== "successful") return;
 
         router.push("/userpage");
       });
