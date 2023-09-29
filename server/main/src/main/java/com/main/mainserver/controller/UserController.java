@@ -2,7 +2,9 @@ package com.main.mainserver.controller;
 
 import com.main.mainserver.dao.AuthenticateDao;
 import com.main.mainserver.dao.LoginDao;
+import com.main.mainserver.entity.SessionEntity;
 import com.main.mainserver.entity.UserEntity;
+import com.main.mainserver.repository.SessionRepository;
 import com.main.mainserver.service.RedisService;
 import com.main.mainserver.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -23,6 +25,8 @@ public class UserController {
     UserService userService;
     @Autowired
     RedisService redisService;
+    @Autowired
+    SessionRepository sessionRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -77,7 +81,13 @@ public class UserController {
                 ;
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        redisService.saveBasicVariable(userMail);
+        //redisService.saveBasicVariable(userMail);
+
+        SessionEntity sEntity = new SessionEntity();
+        sEntity.setId("12345");
+        sEntity.setName("Hasan");
+
+        sessionRepository.save(sEntity);
 
         return "successful";
     }
@@ -85,6 +95,7 @@ public class UserController {
     @PostMapping("/api/authenticate")
     private Boolean authenticateUser(@RequestBody AuthenticateDao autDao) {
         if(autDao.getCookieData() == null) return false;
+        System.out.println(sessionRepository.findById("12345").get().getName());
         return (redisService.isThere(autDao.getCookieData()));
     }
 }
