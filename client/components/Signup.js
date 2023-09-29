@@ -13,6 +13,8 @@ export default function Signup(props) {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         props.closeSignupForm();
+      } else if (event.key === "Enter") {
+        sendToServer();
       }
     };
     document.addEventListener("keydown", handleKeyDown);
