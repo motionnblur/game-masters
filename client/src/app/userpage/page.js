@@ -6,19 +6,8 @@ import { getCookie } from "cookies-next";
 export default function page() {
   const url = "http://localhost:8080/api/authenticate";
   useEffect(() => {
-    axios
-      .post(
-        url,
-        {
-          cookieValue: getCookie("user-id"),
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        alert(response.data);
-      });
+    const cookieVal = getCookie("user-id");
+    alert(cookieVal);
   }, []);
   return (
     <div className="w-full h-full bg-slate-800 flex">
