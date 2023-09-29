@@ -7,7 +7,6 @@ import com.main.mainserver.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -66,8 +65,6 @@ public class UserController {
         if (!passwordEncoder.matches(userPassw, user.getPassw()))
             return "password is wrong";
 
-        //Cookie cookie = new Cookie("user-id", userMail);
-
         ResponseCookie cookie = ResponseCookie.from("user-id", userMail) // key & value
                 .httpOnly(false)
                 .secure(false)
@@ -84,7 +81,7 @@ public class UserController {
         return "successful";
     }
 
-    @GetMapping("/api/authenticate")
+    @PostMapping("/api/authenticate")
     private Boolean authenticateUser(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
 

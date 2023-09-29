@@ -7,13 +7,17 @@ export default function page() {
   const url = "http://localhost:8080/api/authenticate";
   useEffect(() => {
     axios
-      .get(url, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        const cookieValue = getCookie("user-id");
-        console.log(cookieValue);
-        //alert(res);
+      .post(
+        url,
+        {
+          cookieValue: getCookie("user-id"),
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        alert(response.data);
       });
   }, []);
   return (
