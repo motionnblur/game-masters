@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 
-@RedisHash(value = "User", timeToLive = 60)
+@RedisHash(value = "User", timeToLive = 60*60)
 @Getter
 @Setter
 public class SessionEntity implements Serializable {

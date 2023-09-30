@@ -36,8 +36,52 @@ export default function page() {
   return (
     <div className="w-full h-full bg-slate-800 flex">
       <div className="m-2 w-full bg-slate-400 flex items-center flex-col">
-        <div className="w-full h-14 bg-slate-300">
-          <b>Welcome {userName}</b>
+        <div className="w-full h-14 bg-slate-300 flex items-center justify-center">
+          <b>{userName}</b>
+        </div>
+        <div>
+          You have <b>0</b> videos, do you want to upload ?
+          <br />
+          <br />
+          File: <input type="file" id="f" />
+          <button
+            onClick={() => {
+              const fileReader = new FileReader();
+              const theFile = f.files[0];
+
+              fileReader.onload = async (ev) => {
+                const CHUNK_SIZE = 5000;
+                const chunkCount = ev.target.result.byteLength / CHUNK_SIZE;
+                console.log("Read successfully");
+                const fileName = Math.random() * 1000 + theFile.name;
+
+                if (typeof fileName === "undefined") {
+                  throw new TypeError(
+                    'The "fileName" variable must be of type string.'
+                  );
+                }
+
+                for (let chunkId = 0; chunkId < chunkCount + 1; chunkId++) {
+                  const chunk = ev.target.result.slice(
+                    chunkId * CHUNK_SIZE,
+                    chunkId * CHUNK_SIZE + CHUNK_SIZE
+                  );
+                  await fetch("http://localhost:8081/api/upload", {
+                    method: "POST",
+                    headers: {
+                      "content-type": "application/octet-stream",
+                      "content-length": chunk.length,
+                      "file-name": fileName,
+                    },
+                    body: chunk,
+                  });
+                }
+              };
+              fileReader.readAsArrayBuffer(theFile);
+            }}
+          >
+            Upload
+          </button>
         </div>
       </div>
     </div>
