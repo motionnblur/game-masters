@@ -1,21 +1,36 @@
 const http = require("http");
 const fs = require("fs");
 const httpServer = http.createServer();
+
 httpServer.on("listening", () => console.log("Listening..."));
 httpServer.on("request", (req, res) => {
-  if (req.url === "/") {
-    res.end(fs.readFileSync("index.html"));
-    return;
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET", "POST");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, file-name"
+  );
+
+  if (req.method === "OPTIONS") {
+    res.writeHead(200);
+    res.end();
   }
 
-  if (req.url === "/upload") {
+  if (req.method === "POST" && req.url === "/api/upload") {
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET", "POST");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, file-name"
+    );
     const fileName = req.headers["file-name"];
+
     req.on("data", (chunk) => {
       fs.appendFileSync(fileName, chunk);
-      console.log(`received chunk! ${chunk.length}`);
     });
+
     res.end("uploaded!");
   }
 });
 
-httpServer.listen(3001);
+httpServer.listen(8081);
