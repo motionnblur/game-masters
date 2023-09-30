@@ -49,7 +49,10 @@ public class UserController {
             newUser.setMail(userEntity.getMail());
             newUser.setPassw(hashedPassword);
 
-            return userService.saveUser(newUser);
+            UserEntity savedUser = userService.saveUser(newUser);
+            userService.createUserDirectory(savedUser.getId());
+
+            return savedUser.getUserName();
         } catch (Exception e) {
             return "error";
         }

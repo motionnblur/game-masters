@@ -5,6 +5,7 @@ import com.main.mainserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,8 +13,8 @@ import java.util.regex.Pattern;
 public class UserService {
     @Autowired
     UserRepository userRepository;
-    public String saveUser(UserEntity userEntity){
-        return userRepository.save(userEntity).getUserName();
+    public UserEntity saveUser(UserEntity userEntity){
+        return userRepository.save(userEntity);
     }
     public void deleteUser(UserEntity userEntity){
         userRepository.delete(userEntity);
@@ -26,6 +27,10 @@ public class UserService {
     }
     public UserEntity findByUserMail(String userMail){
         return userRepository.findByMail(userMail);
+    }
+    public void createUserDirectory(Long userId){
+        File directory = new File("/media/chill/D/game-masters/users/"+userId);
+        directory.mkdirs();
     }
 
     public boolean validateEmail(String email) {

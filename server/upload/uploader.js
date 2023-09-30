@@ -26,7 +26,7 @@ httpServer.on("request", (req, res) => {
     const fileName = req.headers["file-name"];
 
     req.on("data", (chunk) => {
-      fs.appendFileSync(fileName, chunk);
+      fs.appendFileSync("/media/chill/D/game-masters/users/" + fileName, chunk);
     });
 
     res.end("uploaded!");
