@@ -31,12 +31,17 @@ httpServer.on("request", (req, res) => {
   }
 
   if (req.method === "POST" && req.url === "/api/uploaded") {
+    var stringBuf = "";
     req.on("data", (hash) => {
       const buffer = Buffer.from(hash);
-      const stringBuf = buffer.toString();
-      console.log(stringBuf);
+      stringBuf = buffer.toString();
     });
-    res.end("ok");
+
+    req.on("end", () => {
+      console.log(stringBuf);
+      res.write(stringBuf);
+      res.end("ended");
+    });
   }
 });
 

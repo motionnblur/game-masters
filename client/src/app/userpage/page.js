@@ -95,7 +95,7 @@ export default function page() {
                   }
                 );
 
-                console.log(fetchData);
+                console.log(await fetchData.text());
               };
               fileReader.readAsArrayBuffer(theFile);
             }}
