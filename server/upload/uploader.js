@@ -1,7 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const httpServer = http.createServer();
-const hash = "";
+var hash = "";
 
 httpServer.on("listening", () => console.log("Listening..."));
 httpServer.on("request", (req, res) => {
