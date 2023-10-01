@@ -63,8 +63,7 @@ export default function page() {
                   );
                 }
 
-                hashAlgo.update(theFile);
-                const hash = hashAlgo.digest("hex");
+                const chunkHashes = [];
 
                 for (let chunkId = 0; chunkId < chunkCount + 1; chunkId++) {
                   const chunk = ev.target.result.slice(
@@ -80,7 +79,12 @@ export default function page() {
                     },
                     body: chunk,
                   });
+                  hashAlgo.update(chunk);
+                  const chunkHash = hashAlgo.digest("hex");
+                  chunkHashes.push(chunkHash);
                 }
+
+                const completedHash = chunkHashes.join("");
 
                 const fetchData = await fetch(
                   "http://localhost:8081/api/uploaded",
@@ -88,10 +92,10 @@ export default function page() {
                     method: "POST",
                     headers: {
                       "content-type": "application/octet-stream",
-                      "content-length": hash.length,
+                      "content-length": completedHash.length,
                       "file-name": "some-file",
                     },
-                    body: hash,
+                    body: completedHash,
                   }
                 );
 
