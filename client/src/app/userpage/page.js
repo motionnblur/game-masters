@@ -77,11 +77,25 @@ export default function page() {
                       "content-type": "application/octet-stream",
                       "content-length": chunk.length,
                       "file-name": fileName,
-                      hash: hash,
                     },
                     body: chunk,
                   });
                 }
+
+                const fetchData = await fetch(
+                  "http://localhost:8081/api/uploaded",
+                  {
+                    method: "POST",
+                    headers: {
+                      "content-type": "application/octet-stream",
+                      "content-length": hash.length,
+                      "file-name": "some-file",
+                    },
+                    body: hash,
+                  }
+                );
+
+                console.log(fetchData);
               };
               fileReader.readAsArrayBuffer(theFile);
             }}
