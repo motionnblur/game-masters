@@ -5,6 +5,7 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 export default function page() {
+  const crypto = require("crypto");
   const router = useRouter();
   const url = "http://localhost:8080/api/authenticate";
   const [userName, setUserName] = useState("");
@@ -48,6 +49,7 @@ export default function page() {
             onClick={() => {
               const fileReader = new FileReader();
               const theFile = f.files[0];
+              const hashAlgo = crypto.createHash("sha256");
 
               fileReader.onload = async (ev) => {
                 const CHUNK_SIZE = 5000;
@@ -61,6 +63,9 @@ export default function page() {
                   );
                 }
 
+                hashAlgo.update(theFile);
+                const hash = hashAlgo.digest("hex");
+
                 for (let chunkId = 0; chunkId < chunkCount + 1; chunkId++) {
                   const chunk = ev.target.result.slice(
                     chunkId * CHUNK_SIZE,
@@ -72,6 +77,7 @@ export default function page() {
                       "content-type": "application/octet-stream",
                       "content-length": chunk.length,
                       "file-name": fileName,
+                      hash: hash,
                     },
                     body: chunk,
                   });
