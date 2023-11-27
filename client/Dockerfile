@@ -2,8 +2,7 @@ FROM node:21-alpine
 
 WORKDIR /App
 
-COPY .next .next
-COPY api components node_modules public src ./
+COPY api components public src ./
 COPY jsconfig.json next.config.js package.json ./
 COPY package-lock.json postcss.config.js tailwind.config.js ./
 
