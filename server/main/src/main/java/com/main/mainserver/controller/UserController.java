@@ -31,6 +31,11 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @GetMapping("/hello")
+    private String hello(){
+        return "Hello world";
+    }
+
     @PostMapping("/api/create_user")
     private String createUser(@RequestBody UserEntity userEntity) {
         if (userEntity.getUserName() == null || userEntity.getPassw() == null || userEntity.getMail() == null || userEntity.getLastName() == null)
