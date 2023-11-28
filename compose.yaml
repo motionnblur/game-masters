@@ -1,4 +1,4 @@
-version: "3.1"
+version: "2.20"
 services:
   react:
     build: client/
@@ -12,8 +12,8 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - "postgres"
-      - "redis"
+      - postgres
+      - redis
 
   postgres:
     image: postgres
@@ -24,6 +24,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1
       - POSTGRES_DB=gamemasters
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   redis:
     image: redis:7.2-alpine
@@ -31,3 +33,5 @@ services:
     command: redis-server --save 60 1
     ports:
       - "6379:6379"
+volumes:
+  pgdata:
