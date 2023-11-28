@@ -6,6 +6,9 @@ services:
       - "3000:3000"
     depends_on:
       - spring
+    volumes:
+      - ./client:/App
+      - /App/node_modules
 
   spring:
     build: server/main
