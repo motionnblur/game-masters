@@ -28,3 +28,6 @@ services:
   redis:
     image: redis:7.2-alpine
     restart: always
+    command: redis-server --save 60 1
+    ports:
+      - "6379:6379"
