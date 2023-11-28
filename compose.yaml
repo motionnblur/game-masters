@@ -2,6 +2,8 @@ version: "3.1"
 services:
   react:
     build: client/
+    ports:
+      - "3000:3000"
     depends_on:
       - spring
 
@@ -11,6 +13,7 @@ services:
       - "8080:8080"
     depends_on:
       - "postgres"
+      - "redis"
 
   postgres:
     image: postgres
@@ -21,3 +24,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1
       - POSTGRES_DB=gamemasters
+
+  redis:
+    image: redis:7.2-alpine
+    restart: always
