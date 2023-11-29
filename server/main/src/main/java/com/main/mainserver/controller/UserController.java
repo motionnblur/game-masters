@@ -94,7 +94,7 @@ public class UserController {
 
         SessionEntity sEntity = new SessionEntity();
         sEntity.setId(userId);
-        sEntity.setName("Hasan");
+        sEntity.setName(user.getUserName());
 
         sessionRepository.save(sEntity);
 
