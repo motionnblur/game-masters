@@ -59,7 +59,7 @@ public class FileUploadController {
 			RedirectAttributes redirectAttributes) {
 
 		System.out.println(userName);
-		storageService.store(file);
+		storageService.store(file, userName);
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 

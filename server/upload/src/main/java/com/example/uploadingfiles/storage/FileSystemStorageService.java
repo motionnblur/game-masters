@@ -31,17 +31,20 @@ public class FileSystemStorageService implements StorageService {
 
 		this.rootLocation = Paths.get(properties.getLocation());
 	}
+	@Autowired
+	private StorageProperties storageProperties;
 
 	@Override
-	public void store(MultipartFile file) {
+	public void store(MultipartFile file, String userName) {
 		try {
+			Files.createDirectories(Paths.get(storageProperties.getLocation()+"/"+userName));
 			if (file.isEmpty()) {
 				throw new StorageException("Failed to store empty file.");
 			}
-			Path destinationFile = this.rootLocation.resolve(
+			Path destinationFile = Paths.get(storageProperties.getLocation()+"/"+userName).resolve(
 					Paths.get(file.getOriginalFilename()))
 					.normalize().toAbsolutePath();
-			if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
+			if (!destinationFile.getParent().equals(Paths.get(storageProperties.getLocation()+"/"+userName).toAbsolutePath())) {
 				// This is a security check
 				throw new StorageException(
 						"Cannot store file outside current directory.");
