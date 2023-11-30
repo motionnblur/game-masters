@@ -39,6 +39,7 @@ export default function Signup(props) {
       })
       .then((res) => {
         alert(res.data);
+        props.closeSignupForm();
       });
   };
 
