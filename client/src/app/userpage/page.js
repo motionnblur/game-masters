@@ -5,7 +5,6 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 export default function page() {
-  const crypto = require("crypto");
   const router = useRouter();
   const url = "http://localhost:8080/api/authenticate";
   const [userName, setUserName] = useState("");
@@ -43,17 +42,14 @@ export default function page() {
 
     const formData = new FormData();
     formData.append("file", file);
-
-    //const response = await fetch("http://localhost:8081/upload", {
-    //  method: "POST",
-    //  body: formData,
-    //});
+    formData.append("userName", userName);
 
     axios
       .post("http://localhost:8081/upload", formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
         },
       })
       .then((res) => {
