@@ -49,7 +49,6 @@ export default function page() {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
-          "Access-Control-Allow-Origin": "*",
         },
       })
       .then((res) => {
