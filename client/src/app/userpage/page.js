@@ -5,10 +5,12 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 export default function page() {
-  const crypto = require("crypto");
   const router = useRouter();
   const url = "http://localhost:8080/api/authenticate";
   const [userName, setUserName] = useState("");
+
+  const [file, setFile] = useState();
+
   useEffect(() => {
     //setUserName(getCookie("user-id"));
     axios
@@ -34,6 +36,30 @@ export default function page() {
         }
       });
   }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("userName", userName);
+
+    axios
+      .post("http://localhost:8081/upload", formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
   return (
     <div className="w-full h-full bg-slate-800 flex">
       <div className="m-2 w-full bg-slate-400 flex items-center flex-col">
@@ -41,71 +67,10 @@ export default function page() {
           <b>{userName}</b>
         </div>
         <div>
-          You have <b>0</b> videos, do you want to upload ?
-          <br />
-          <br />
-          File: <input type="file" id="f" />
-          <button
-            onClick={() => {
-              const fileReader = new FileReader();
-              const theFile = f.files[0];
-              const hashAlgo = crypto.createHash("sha256");
-
-              fileReader.onload = async (ev) => {
-                const CHUNK_SIZE = 5000;
-                const chunkCount = ev.target.result.byteLength / CHUNK_SIZE;
-                console.log("Read successfully");
-                const fileName = Math.random() * 1000 + theFile.name;
-
-                if (typeof fileName === "undefined") {
-                  throw new TypeError(
-                    'The "fileName" variable must be of type string.'
-                  );
-                }
-
-                const chunkHashes = [];
-
-                for (let chunkId = 0; chunkId < chunkCount + 1; chunkId++) {
-                  const chunk = ev.target.result.slice(
-                    chunkId * CHUNK_SIZE,
-                    chunkId * CHUNK_SIZE + CHUNK_SIZE
-                  );
-                  await fetch("http://localhost:8081/api/upload", {
-                    method: "POST",
-                    headers: {
-                      "content-type": "application/octet-stream",
-                      "content-length": chunk.length,
-                      "file-name": fileName,
-                    },
-                    body: chunk,
-                  });
-                  hashAlgo.update(chunk);
-                  const chunkHash = hashAlgo.digest("hex");
-                  chunkHashes.push(chunkHash);
-                }
-
-                const completedHash = chunkHashes.join("");
-
-                const fetchData = await fetch(
-                  "http://localhost:8081/api/uploaded",
-                  {
-                    method: "POST",
-                    headers: {
-                      "content-type": "application/octet-stream",
-                      "content-length": completedHash.length,
-                      "file-name": "some-file",
-                    },
-                    body: completedHash,
-                  }
-                );
-
-                console.log(await fetchData.text());
-              };
-              fileReader.readAsArrayBuffer(theFile);
-            }}
-          >
-            Upload
-          </button>
+          <form onSubmit={handleSubmit}>
+            <input type="file" name="file" onChange={handleFileChange} />
+            <input type="submit" value="Upload" />
+          </form>
         </div>
       </div>
     </div>

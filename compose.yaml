@@ -38,5 +38,16 @@ services:
     command: redis-server --save 60 1
     ports:
       - "6379:6379"
+    
+  upload:
+    build: server/upload
+    ports:
+      - "8081:8080"
+    depends_on:
+      - spring
+      - react
+    volumes:
+      - ./server/upload:/App
+      - /media/storage2/Videos/:/App/upload-dir
 volumes:
   pgdata:
