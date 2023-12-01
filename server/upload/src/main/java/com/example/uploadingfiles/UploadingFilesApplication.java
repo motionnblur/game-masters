@@ -8,7 +8,9 @@ import org.springframework.context.annotation.Bean;
 
 import com.example.uploadingfiles.storage.StorageProperties;
 import com.example.uploadingfiles.storage.StorageService;
+import org.springframework.scheduling.annotation.EnableAsync;
 
+@EnableAsync
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
 public class UploadingFilesApplication {

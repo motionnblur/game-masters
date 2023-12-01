@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +24,11 @@ import com.example.uploadingfiles.storage.StorageService;
 public class FileUploadController {
 
 	private final StorageService storageService;
-
+	private final AsyncUploadNotifier asyncUploadNotifier;
 	@Autowired
-	public FileUploadController(StorageService storageService) {
+	public FileUploadController(StorageService storageService, AsyncUploadNotifier asyncUploadNotifier) {
 		this.storageService = storageService;
+		this.asyncUploadNotifier = asyncUploadNotifier;
 	}
 
 	@GetMapping("/")
@@ -63,6 +65,7 @@ public class FileUploadController {
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 
+		asyncUploadNotifier.sendAsyncNotification("ok");
 		return "redirect:/";
 	}
 

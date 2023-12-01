@@ -2,6 +2,7 @@ package com.main.mainserver.controller;
 
 import com.main.mainserver.dao.AuthenticateDao;
 import com.main.mainserver.dao.LoginDao;
+import com.main.mainserver.dao.UploadStatus;
 import com.main.mainserver.entity.SessionEntity;
 import com.main.mainserver.entity.UserEntity;
 import com.main.mainserver.repository.SessionRepository;
@@ -36,6 +37,11 @@ public class UserController {
         return "Hello world";
     }
 
+    @PostMapping("/api/updateUploadTable")
+    private String upload(@RequestBody UploadStatus uploadStatus){
+        System.out.println(uploadStatus);
+        return "uploaded";
+    }
     @PostMapping("/api/create_user")
     private String createUser(@RequestBody UserEntity userEntity) {
         if (userEntity.getUserName() == null || userEntity.getPassw() == null || userEntity.getMail() == null || userEntity.getLastName() == null)
