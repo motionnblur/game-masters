@@ -39,7 +39,7 @@ public class UserController {
 
     @PostMapping("/api/updateUploadTable")
     private String upload(@RequestBody UploadStatus uploadStatus){
-        System.out.println(uploadStatus);
+        System.out.println(uploadStatus.getFileName() +" "+ uploadStatus.getFilePath());
         return "uploaded";
     }
     @PostMapping("/api/create_user")

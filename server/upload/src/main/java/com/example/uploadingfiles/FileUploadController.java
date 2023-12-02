@@ -1,6 +1,8 @@
 package com.example.uploadingfiles;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,14 +60,18 @@ public class FileUploadController {
 	@PostMapping("/upload")
 	public String handleFileUpload(@RequestParam("file") MultipartFile file,
 			@RequestParam("userName") String userName,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes) throws IOException {
 
 		System.out.println(userName);
 		storageService.store(file, userName);
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 
-		asyncUploadNotifier.sendAsyncNotification("ok");
+		Path destinationFile = Paths.get("upload-dir/"+userName).resolve(
+						Paths.get(file.getOriginalFilename()))
+				.normalize().toAbsolutePath();
+
+		asyncUploadNotifier.sendAsyncNotification(file.getOriginalFilename(), destinationFile.toString());
 		return "redirect:/";
 	}
 
