@@ -1,5 +1,6 @@
 package com.main.mainserver.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,7 @@ public class UserTableEntity {
     private String fileName;
     private String filePath;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="userEntity_id", nullable=false)
     UserEntity userEntity;

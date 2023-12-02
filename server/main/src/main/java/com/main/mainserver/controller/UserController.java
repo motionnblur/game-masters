@@ -7,11 +7,13 @@ import com.main.mainserver.entity.SessionEntity;
 import com.main.mainserver.entity.UserEntity;
 import com.main.mainserver.entity.UserTableEntity;
 import com.main.mainserver.repository.SessionRepository;
+import com.main.mainserver.repository.UploadTableRepository;
 import com.main.mainserver.service.RedisService;
 import com.main.mainserver.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -30,7 +32,7 @@ public class UserController {
     @Autowired
     UserService userService;
     @Autowired
-    RedisService redisService;
+    UploadTableRepository uploadTableRepository;
     @Autowired
     SessionRepository sessionRepository;
     @Autowired
@@ -41,21 +43,21 @@ public class UserController {
         return "Hello world";
     }
 
+    @GetMapping("/api/getUploadTable")
+    private @ResponseBody List<UserTableEntity> getUserTable(@RequestParam String userName){
+        UserEntity user = userService.findUser(userName);
+        return uploadTableRepository.findByUserEntity(user);
+    }
+
     @PostMapping("/api/updateUploadTable")
     private String upload(@RequestBody UploadStatus uploadStatus){
         UserEntity user = userService.findUser(uploadStatus.getUserName());
-
         UserTableEntity userTableEntity = new UserTableEntity();
         userTableEntity.setUserEntity(user);
         userTableEntity.setFileName(uploadStatus.getFileName());
         userTableEntity.setFilePath(uploadStatus.getFilePath());
 
-        List<UserTableEntity> userTableEntityList = new ArrayList<>();
-        userTableEntityList.add(userTableEntity);
-
-        user.setUserTableEntity(userTableEntityList);
-
-        userService.saveUser(user);
+        uploadTableRepository.save(userTableEntity);
 
         return "uploaded";
     }

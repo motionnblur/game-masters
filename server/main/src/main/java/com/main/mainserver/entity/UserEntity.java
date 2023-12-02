@@ -1,5 +1,6 @@
 package com.main.mainserver.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class UserEntity {
     private String mail;
     private String passw;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<UserTableEntity> userTableEntity;
 }
