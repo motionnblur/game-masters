@@ -10,6 +10,8 @@ export default function page() {
   const [userName, setUserName] = useState("");
 
   const [file, setFile] = useState();
+  const [getTable, setGetTable] = useState(false);
+  const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     //setUserName(getCookie("user-id"));
@@ -60,18 +62,42 @@ export default function page() {
     setFile(event.target.files[0]);
   };
 
+  const getUploadTable = () => {
+    setGetTable(!getTable);
+    axios
+      .get("http://localhost:8080/api/getUploadTable", {
+        params: {
+          userName: "cancan",
+        },
+      })
+      .then((res) => {
+        res.data.forEach((item) => {
+          console.log(item.fileName + ", path= " + item.filePath);
+          setVideos((videos) => [
+            ...videos,
+            {
+              fileName: item.fileName,
+              filePath: item.filePath,
+            },
+          ]);
+        });
+      });
+  };
+
   return (
     <div className="w-full h-full bg-slate-800 flex">
       <div className="m-2 w-full bg-slate-400 flex items-center flex-col">
         <div className="w-full h-14 bg-slate-300 flex items-center justify-center">
           <b>{userName}</b>
         </div>
-        <div>
+        <>
           <form onSubmit={handleSubmit}>
             <input type="file" name="file" onChange={handleFileChange} />
             <input type="submit" value="Upload" />
           </form>
-        </div>
+        </>
+        <button onClick={getUploadTable}>Click to see your videos</button>
+        {getTable && videos.map((item) => `${item.fileName}, ${item.filePath}`)}
       </div>
     </div>
   );
