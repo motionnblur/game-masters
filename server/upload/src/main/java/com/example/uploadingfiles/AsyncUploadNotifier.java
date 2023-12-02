@@ -12,12 +12,13 @@ import java.util.Map;
 public class AsyncUploadNotifier {
     String url = "http://spring:8080/api/updateUploadTable";
     @Async
-    public void sendAsyncNotification(String fileName, String filePath){
+    public void sendAsyncNotification(String fileName, String filePath, String userName){
         RestTemplate restTemplate = new RestTemplate();
         Map<String, Object> requestBody = new HashMap<>();
 
         requestBody.put("fileName", fileName);
         requestBody.put("filePath", filePath);
+        requestBody.put("userName", userName);
 
         ResponseEntity<String> response = restTemplate.postForEntity(url, requestBody, String.class);
 

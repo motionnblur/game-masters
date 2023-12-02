@@ -5,6 +5,7 @@ import com.main.mainserver.dao.LoginDao;
 import com.main.mainserver.dao.UploadStatus;
 import com.main.mainserver.entity.SessionEntity;
 import com.main.mainserver.entity.UserEntity;
+import com.main.mainserver.entity.UserTableEntity;
 import com.main.mainserver.repository.SessionRepository;
 import com.main.mainserver.service.RedisService;
 import com.main.mainserver.service.UserService;
@@ -16,6 +17,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import java.time.Duration;
@@ -39,7 +43,20 @@ public class UserController {
 
     @PostMapping("/api/updateUploadTable")
     private String upload(@RequestBody UploadStatus uploadStatus){
-        System.out.println(uploadStatus.getFileName() +" "+ uploadStatus.getFilePath());
+        UserEntity user = userService.findUser(uploadStatus.getUserName());
+
+        UserTableEntity userTableEntity = new UserTableEntity();
+        userTableEntity.setUserEntity(user);
+        userTableEntity.setFileName(uploadStatus.getFileName());
+        userTableEntity.setFilePath(uploadStatus.getFilePath());
+
+        List<UserTableEntity> userTableEntityList = new ArrayList<>();
+        userTableEntityList.add(userTableEntity);
+
+        user.setUserTableEntity(userTableEntityList);
+
+        userService.saveUser(user);
+
         return "uploaded";
     }
     @PostMapping("/api/create_user")

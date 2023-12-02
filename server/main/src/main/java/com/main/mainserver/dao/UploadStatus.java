@@ -9,4 +9,5 @@ import org.springframework.core.io.Resource;
 public class UploadStatus {
     String fileName;
     String filePath;
+    String userName;
 }

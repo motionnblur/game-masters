@@ -1,10 +1,9 @@
 package com.main.mainserver.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -21,4 +20,7 @@ public class UserEntity {
     private String lastName;
     private String mail;
     private String passw;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<UserTableEntity> userTableEntity;
 }

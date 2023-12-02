@@ -71,7 +71,7 @@ public class FileUploadController {
 						Paths.get(file.getOriginalFilename()))
 				.normalize().toAbsolutePath();
 
-		asyncUploadNotifier.sendAsyncNotification(file.getOriginalFilename(), destinationFile.toString());
+		asyncUploadNotifier.sendAsyncNotification(file.getOriginalFilename(), destinationFile.toString(), userName);
 		return "redirect:/";
 	}
 
