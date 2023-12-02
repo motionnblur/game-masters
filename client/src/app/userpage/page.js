@@ -72,7 +72,7 @@ export default function page() {
       })
       .then((res) => {
         res.data.forEach((item) => {
-          console.log(item.fileName + ", path= " + item.filePath);
+          //console.log(item.fileName + ", path= " + item.filePath);
           setVideos((videos) => [
             ...videos,
             {
@@ -97,7 +97,12 @@ export default function page() {
           </form>
         </>
         <button onClick={getUploadTable}>Click to see your videos</button>
-        {getTable && videos.map((item) => `${item.fileName}, ${item.filePath}`)}
+        {getTable &&
+          videos.map((item) => (
+            <>
+              File name: {item.fileName}, path: {item.filePath} <br />
+            </>
+          ))}
       </div>
     </div>
   );
