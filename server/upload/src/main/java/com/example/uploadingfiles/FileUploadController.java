@@ -27,10 +27,16 @@ public class FileUploadController {
 
 	private final StorageService storageService;
 	private final AsyncUploadNotifier asyncUploadNotifier;
+	private final UploadGuard uploadGuard;
 	@Autowired
-	public FileUploadController(StorageService storageService, AsyncUploadNotifier asyncUploadNotifier) {
+	public FileUploadController(
+			StorageService storageService,
+			AsyncUploadNotifier asyncUploadNotifier,
+			UploadGuard uploadGuard
+	) {
 		this.storageService = storageService;
 		this.asyncUploadNotifier = asyncUploadNotifier;
+		this.uploadGuard = uploadGuard;
 	}
 
 	@GetMapping("/")
@@ -58,21 +64,18 @@ public class FileUploadController {
 	}
 
 	@PostMapping("/upload")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file,
-			@RequestParam("userName") String userName,
-			RedirectAttributes redirectAttributes) throws IOException {
-
-		System.out.println(userName);
+	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
+			@RequestParam("userName") String userName){
+		if(!uploadGuard.isVideoFile(file.getOriginalFilename()))
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		storageService.store(file, userName);
-		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + file.getOriginalFilename() + "!");
 
 		Path destinationFile = Paths.get("upload-dir/"+userName).resolve(
 						Paths.get(file.getOriginalFilename()))
 				.normalize().toAbsolutePath();
 
 		asyncUploadNotifier.sendAsyncNotification(file.getOriginalFilename(), destinationFile.toString(), userName);
-		return "redirect:/";
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@ExceptionHandler(StorageFileNotFoundException.class)

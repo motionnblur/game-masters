@@ -49,7 +49,7 @@ export default function page() {
 
     if (!isVideoFile(file.name)) {
       console.log("it's not a video file");
-      return;
+      //return;
     }
 
     axios
@@ -60,7 +60,7 @@ export default function page() {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.status);
       });
   };
 

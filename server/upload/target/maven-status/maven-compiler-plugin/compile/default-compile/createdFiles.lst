@@ -5,5 +5,6 @@ com/example/uploadingfiles/UploadingFilesApplication.class
 com/example/uploadingfiles/storage/StorageProperties.class
 com/example/uploadingfiles/storage/FileSystemStorageService.class
 com/example/uploadingfiles/Configs/AsyncConfig.class
+com/example/uploadingfiles/UploadGuard.class
 com/example/uploadingfiles/storage/StorageFileNotFoundException.class
 com/example/uploadingfiles/storage/StorageException.class
