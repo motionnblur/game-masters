@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface UploadTableRepository extends JpaRepository<UserTableEntity, Long> {
     List<UserTableEntity> findByUserEntity(UserEntity userEntity);
+    UserTableEntity findByFileName(String fileName);
 }

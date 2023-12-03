@@ -25,6 +25,10 @@ public class UploadController {
 
     @PostMapping("/api/updateUploadTable")
     private String upload(@RequestBody UploadStatus uploadStatus){
+        UserTableEntity temp = uploadTableRepository.findByFileName(uploadStatus.getFileName());
+        if(temp != null)
+            return "same data exist";
+
         UserEntity user = userService.findUser(uploadStatus.getUserName());
         UserTableEntity userTableEntity = new UserTableEntity();
         userTableEntity.setUserEntity(user);

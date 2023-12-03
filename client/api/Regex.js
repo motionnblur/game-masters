@@ -4,7 +4,16 @@ export function validateEmail(email) {
 }
 
 export function isVideoFile(filename) {
-  var videoExtensions = ["mp4", "mkv", "flv", "gif", "avi", "mov", "wmv"];
+  var videoExtensions = [
+    "mp4",
+    "mkv",
+    "flv",
+    "gif",
+    "avi",
+    "mov",
+    "wmv",
+    "webm",
+  ];
   var extension = filename.split(".").pop().toLowerCase();
 
   return videoExtensions.includes(extension);
