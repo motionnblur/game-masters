@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import { isVideoFile } from "../../../api/Regex";
 
 export default function page() {
   const router = useRouter();
@@ -45,6 +46,11 @@ export default function page() {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("userName", userName);
+
+    if (!isVideoFile(file.name)) {
+      console.log("it's not a video file");
+      return;
+    }
 
     axios
       .post("http://localhost:8081/upload", formData, {
