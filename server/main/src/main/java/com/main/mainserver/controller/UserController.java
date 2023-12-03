@@ -32,35 +32,10 @@ public class UserController {
     @Autowired
     UserService userService;
     @Autowired
-    UploadTableRepository uploadTableRepository;
-    @Autowired
     SessionRepository sessionRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("/hello")
-    private String hello(){
-        return "Hello world";
-    }
-
-    @GetMapping("/api/getUploadTable")
-    private @ResponseBody List<UserTableEntity> getUserTable(@RequestParam String userName){
-        UserEntity user = userService.findUser(userName);
-        return uploadTableRepository.findByUserEntity(user);
-    }
-
-    @PostMapping("/api/updateUploadTable")
-    private String upload(@RequestBody UploadStatus uploadStatus){
-        UserEntity user = userService.findUser(uploadStatus.getUserName());
-        UserTableEntity userTableEntity = new UserTableEntity();
-        userTableEntity.setUserEntity(user);
-        userTableEntity.setFileName(uploadStatus.getFileName());
-        userTableEntity.setFilePath(uploadStatus.getFilePath());
-
-        uploadTableRepository.save(userTableEntity);
-
-        return "uploaded";
-    }
     @PostMapping("/api/create_user")
     private String createUser(@RequestBody UserEntity userEntity) {
         if (userEntity.getUserName() == null || userEntity.getPassw() == null || userEntity.getMail() == null || userEntity.getLastName() == null)
