@@ -74,7 +74,7 @@ export default function page() {
     axios
       .get("http://localhost:8080/api/getUploadTable", {
         params: {
-          userName: "cancan",
+          userName: userName,
         },
       })
       .then((res) => {
