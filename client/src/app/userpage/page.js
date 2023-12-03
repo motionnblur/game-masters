@@ -63,6 +63,7 @@ export default function page() {
   };
 
   const getUploadTable = () => {
+    if (videos.length > 0) setVideos([]);
     setGetTable(!getTable);
     axios
       .get("http://localhost:8080/api/getUploadTable", {
@@ -72,7 +73,6 @@ export default function page() {
       })
       .then((res) => {
         res.data.forEach((item) => {
-          //console.log(item.fileName + ", path= " + item.filePath);
           setVideos((videos) => [
             ...videos,
             {
