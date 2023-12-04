@@ -1,4 +1,4 @@
-package com.example.uploadingfiles.storage;
+package com.example.uploadingfiles.Core.storage;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +16,7 @@ public interface StorageService {
 
 	Path load(String filename);
 
-	Resource loadAsResource(String filename);
+	Resource loadAsResource(String filename, String userName);
 
 	void deleteAll();
 

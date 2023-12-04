@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import validateEmail from "../api/Regex";
+import { validateEmail } from "../api/Regex";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";

@@ -4,12 +4,13 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
+const url = "http://localhost:8080/api/authenticate";
+
 export default function page() {
   const router = useRouter();
-  const url = "http://localhost:8080/api/authenticate";
   const [userName, setUserName] = useState("");
-
-  const [file, setFile] = useState();
+  const [videos, setVideos] = useState([]);
+  const [byte, setByte] = useState(null);
 
   useEffect(() => {
     //setUserName(getCookie("user-id"));
@@ -27,7 +28,6 @@ export default function page() {
         }
       )
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           setUserName(res.data);
         } else {
@@ -35,44 +35,54 @@ export default function page() {
           router.push("/");
         }
       });
-  }, []);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("userName", userName);
-
+    if (videos.length > 0) setVideos([]);
     axios
-      .post("http://localhost:8081/upload", formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
+      .get("http://localhost:8080/api/getUploadTable", {
+        params: {
+          userName: userName,
         },
       })
       .then((res) => {
+        res.data.forEach((item) => {
+          setVideos((videos) => [
+            ...videos,
+            {
+              fileName: item.fileName,
+              filePath: item.filePath,
+            },
+          ]);
+        });
+      });
+
+    axios
+      .get(
+        "http://localhost:8081/getVideoImg",
+
+        {
+          params: {
+            fileName: "30 Minute Timer.webm",
+            userName: "can",
+          },
+        }
+      )
+      .then((res) => {
+        setByte("data:image/png;base64," + res.data);
         console.log(res.data);
       });
-  };
-
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
+  }, [userName]);
 
   return (
-    <div className="w-full h-full bg-slate-800 flex">
-      <div className="m-2 w-full bg-slate-400 flex items-center flex-col">
-        <div className="w-full h-14 bg-slate-300 flex items-center justify-center">
-          <b>{userName}</b>
-        </div>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <input type="file" name="file" onChange={handleFileChange} />
-            <input type="submit" value="Upload" />
-          </form>
-        </div>
-      </div>
+    <div className="flex flex-col justify-center align-middle items-center">
+      <b>{userName}</b>
+      <br />
+      <b>## your videos ##</b>
+      {videos.map((item) => (
+        <>
+          File name: {item.fileName}, path: {item.filePath} <br />
+        </>
+      ))}
+      <img src={byte}></img>
     </div>
   );
 }

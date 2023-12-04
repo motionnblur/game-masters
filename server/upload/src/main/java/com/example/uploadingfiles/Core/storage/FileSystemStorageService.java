@@ -1,4 +1,4 @@
-package com.example.uploadingfiles.storage;
+package com.example.uploadingfiles.Core.storage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +14,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -78,10 +77,12 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public Resource loadAsResource(String filename) {
+	public Resource loadAsResource(String filename, String userName) {
 		try {
-			Path file = load(filename);
-			Resource resource = new UrlResource(file.toUri());
+			Path filePath = Paths.get(storageProperties.getLocation()+"/"+userName).resolve(
+							Paths.get(filename))
+					.normalize().toAbsolutePath();
+			Resource resource = new UrlResource(filePath.toUri());
 			if (resource.exists() || resource.isReadable()) {
 				return resource;
 			}
