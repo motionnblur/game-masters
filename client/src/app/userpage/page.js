@@ -10,10 +10,9 @@ export default function page() {
   const router = useRouter();
   const [userName, setUserName] = useState("");
   const [videos, setVideos] = useState([]);
-  const [byte, setByte] = useState(null);
+  const [byte, setByte] = useState([]);
 
   useEffect(() => {
-    //setUserName(getCookie("user-id"));
     axios
       .post(
         url,
@@ -35,42 +34,40 @@ export default function page() {
           router.push("/");
         }
       });
+  }, []);
 
-    if (videos.length > 0) setVideos([]);
-    axios
-      .get("http://localhost:8080/api/getUploadTable", {
-        params: {
-          userName: userName,
-        },
-      })
-      .then((res) => {
-        res.data.forEach((item) => {
-          setVideos((videos) => [
-            ...videos,
-            {
-              fileName: item.fileName,
-              filePath: item.filePath,
-            },
-          ]);
-        });
-      });
-
-    axios
-      .get(
-        "http://localhost:8081/getVideoImg",
-
-        {
+  useEffect(() => {
+    if (userName) {
+      axios
+        .get("http://localhost:8080/api/getUploadTable", {
           params: {
-            fileName: "30 Minute Timer.webm",
+            userName: userName,
+          },
+        })
+        .then((res) => {
+          const newVideos = res.data.map((item) => ({
+            fileName: item.fileName,
+            filePath: item.filePath,
+          }));
+          setVideos(newVideos);
+        });
+    }
+  }, [userName]);
+
+  useEffect(() => {
+    videos.forEach((item) => {
+      axios
+        .get("http://localhost:8081/getVideoImg", {
+          params: {
+            fileName: item.fileName,
             userName: "can",
           },
-        }
-      )
-      .then((res) => {
-        setByte("data:image/png;base64," + res.data);
-        console.log(res.data);
-      });
-  }, [userName]);
+        })
+        .then((res) => {
+          setByte((oldArr) => [...oldArr, "data:image/png;base64," + res.data]);
+        });
+    });
+  }, [videos]);
 
   return (
     <div className="flex flex-col justify-center align-middle items-center">
@@ -82,7 +79,14 @@ export default function page() {
           File name: {item.fileName}, path: {item.filePath} <br />
         </>
       ))}
-      <img src={byte}></img>
+
+      {byte.map((data) => {
+        return (
+          <>
+            <img src={data}></img>
+          </>
+        );
+      })}
     </div>
   );
 }
