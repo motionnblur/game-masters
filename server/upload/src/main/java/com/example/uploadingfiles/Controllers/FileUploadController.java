@@ -1,6 +1,8 @@
 package com.example.uploadingfiles.Controllers;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
@@ -58,9 +60,24 @@ public class FileUploadController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		storageService.store(file, userName);
 
-		Path destinationFile = Paths.get("upload-dir/"+userName).resolve(
+		Path path = Paths.get("upload-dir/" + userName);
+		Path destinationFile = path.resolve(
 						Paths.get(file.getOriginalFilename()))
 				.normalize().toAbsolutePath();
+
+		ProcessBuilder processBuilder = new ProcessBuilder("ffmpeg", "-ss", "00:00", "-i", destinationFile.toString(), "-vframes", "1", path +"/"+file.getOriginalFilename()+".png");
+		try {
+			Process process = processBuilder.start();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				System.out.println(line);
+			}
+			int exitCode = process.waitFor();
+			System.out.println("\nExited with error code : " + exitCode);
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		asyncUploadNotifier.sendAsyncNotification(file.getOriginalFilename(), destinationFile.toString(), userName);
 		return new ResponseEntity<>(HttpStatus.CREATED);
