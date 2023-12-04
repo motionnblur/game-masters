@@ -1,4 +1,4 @@
-package com.example.uploadingfiles;
+package com.example.uploadingfiles.Core.storage;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;

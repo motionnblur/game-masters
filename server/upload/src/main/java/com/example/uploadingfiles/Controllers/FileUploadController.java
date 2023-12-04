@@ -1,10 +1,12 @@
-package com.example.uploadingfiles;
+package com.example.uploadingfiles.Controllers;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
+import com.example.uploadingfiles.Core.storage.AsyncUploadNotifier;
+import com.example.uploadingfiles.Configs.UploadGuard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -15,10 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.uploadingfiles.storage.StorageFileNotFoundException;
-import com.example.uploadingfiles.storage.StorageService;
+import com.example.uploadingfiles.Core.storage.StorageFileNotFoundException;
+import com.example.uploadingfiles.Core.storage.StorageService;
 
 
 @CrossOrigin(value = "http://localhost:3000", allowCredentials = "true")
@@ -48,19 +49,6 @@ public class FileUploadController {
 				.collect(Collectors.toList()));
 
 		return "uploadForm";
-	}
-
-	@GetMapping("/files/{filename:.+}")
-	@ResponseBody
-	public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-
-		Resource file = storageService.loadAsResource(filename);
-
-		if (file == null)
-			return ResponseEntity.notFound().build();
-
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-				"attachment; filename=\"" + file.getFilename() + "\"").body(file);
 	}
 
 	@PostMapping("/upload")

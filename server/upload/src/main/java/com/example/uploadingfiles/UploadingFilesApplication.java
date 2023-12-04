@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import com.example.uploadingfiles.storage.StorageProperties;
-import com.example.uploadingfiles.storage.StorageService;
+import com.example.uploadingfiles.Core.storage.StorageProperties;
+import com.example.uploadingfiles.Core.storage.StorageService;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync

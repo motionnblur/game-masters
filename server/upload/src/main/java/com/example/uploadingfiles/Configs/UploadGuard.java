@@ -1,4 +1,4 @@
-package com.example.uploadingfiles;
+package com.example.uploadingfiles.Configs;
 
 import org.springframework.stereotype.Service;
 
