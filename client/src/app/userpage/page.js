@@ -10,6 +10,7 @@ export default function page() {
   const router = useRouter();
   const [userName, setUserName] = useState("");
   const [videos, setVideos] = useState([]);
+  const [byte, setByte] = useState(null);
 
   useEffect(() => {
     //setUserName(getCookie("user-id"));
@@ -54,22 +55,21 @@ export default function page() {
         });
       });
 
-    /////////////////////////////
-    //axios
-    //  .get(
-    //    "http://localhost:8081/getFile",
-    //
-    //    {
-    //     params: {
-    //        fileName: "30 Minute Timer.webm",
-    //       userName: "can",
-    //     },
-    //  }
-    // )
-    // .then((res) => {
-    //   console.log(res.data);
-    //  });
-    /////////////////////////////
+    axios
+      .get(
+        "http://localhost:8081/getVideoImg",
+
+        {
+          params: {
+            fileName: "30 Minute Timer.webm",
+            userName: "can",
+          },
+        }
+      )
+      .then((res) => {
+        setByte("data:image/png;base64," + res.data);
+        console.log(res.data);
+      });
   }, [userName]);
 
   return (
@@ -82,6 +82,7 @@ export default function page() {
           File name: {item.fileName}, path: {item.filePath} <br />
         </>
       ))}
+      <img src={byte}></img>
     </div>
   );
 }
