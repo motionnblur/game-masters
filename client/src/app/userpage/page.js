@@ -53,6 +53,23 @@ export default function page() {
           ]);
         });
       });
+
+    /////////////////////////////
+    //axios
+    //  .get(
+    //    "http://localhost:8081/getFile",
+    //
+    //    {
+    //     params: {
+    //        fileName: "30 Minute Timer.webm",
+    //       userName: "can",
+    //     },
+    //  }
+    // )
+    // .then((res) => {
+    //   console.log(res.data);
+    //  });
+    /////////////////////////////
   }, [userName]);
 
   return (
