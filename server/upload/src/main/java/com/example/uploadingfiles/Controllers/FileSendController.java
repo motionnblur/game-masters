@@ -50,25 +50,10 @@ public class FileSendController {
     @ResponseBody
     public String getVideoImg(@RequestParam("fileName") String fileName,
                                               @RequestParam("userName") String userName) {
-
-        Path filePath = Paths.get(storageProperties.getLocation()+"/"+"can").resolve(
-                        Paths.get("30 Minute Timer.webm"))
+        Path filePath = Paths.get(storageProperties.getLocation()+"/"+userName).resolve(
+                        Paths.get(fileName+".png"))
                 .normalize().toAbsolutePath();
-        System.out.println(filePath.toString());
-        ProcessBuilder processBuilder = new ProcessBuilder("ffmpeg", "-ss", "00:00", "-i", filePath.toString(), "-vframes", "1", "img.png");
-        try {
-            Process process = processBuilder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-            int exitCode = process.waitFor();
-            System.out.println("\nExited with error code : " + exitCode);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return "ok";
+        return filePath.toString();
     }
 
     @GetMapping("/getFilePath")
