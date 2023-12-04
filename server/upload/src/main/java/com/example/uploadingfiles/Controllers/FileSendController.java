@@ -12,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -41,6 +44,31 @@ public class FileSendController {
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
+
+    @GetMapping("/getVideoImg")
+    @ResponseBody
+    public String getVideoImg(@RequestParam("fileName") String fileName,
+                                              @RequestParam("userName") String userName) {
+
+        Path filePath = Paths.get(storageProperties.getLocation()+"/"+"can").resolve(
+                        Paths.get("30 Minute Timer.webm"))
+                .normalize().toAbsolutePath();
+        System.out.println(filePath.toString());
+        ProcessBuilder processBuilder = new ProcessBuilder("ffmpeg", "-ss", "00:00", "-i", filePath.toString(), "-vframes", "1", "img.png");
+        try {
+            Process process = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            int exitCode = process.waitFor();
+            System.out.println("\nExited with error code : " + exitCode);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "ok";
     }
 
     @GetMapping("/getFilePath")
