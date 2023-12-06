@@ -57,13 +57,4 @@ public class FileSendController {
 
         return Base64.encodeBase64String(decodeBase64);
     }
-
-    @GetMapping("/getFilePath")
-    @ResponseBody
-    public String path(){
-        Path filePath = Paths.get(storageProperties.getLocation()+"/"+"can").resolve(
-                        Paths.get("30 Minute Timer.webm"))
-                .normalize().toAbsolutePath();
-        return filePath.toString();
-    }
 }
