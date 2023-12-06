@@ -47,7 +47,6 @@ export default function page() {
         .then((res) => {
           const newVideos = res.data.map((item) => ({
             fileName: item.fileName,
-            filePath: item.filePath,
           }));
           setVideos(newVideos);
         });
@@ -74,16 +73,11 @@ export default function page() {
       <b>{userName}</b>
       <br />
       <b>## your videos ##</b>
-      {videos.map((item) => (
-        <>
-          File name: {item.fileName}, path: {item.filePath} <br />
-        </>
-      ))}
 
       {byte.map((data) => {
         return (
           <>
-            <img src={data}></img>
+            <img src={data} width="500" height="500"></img>
           </>
         );
       })}

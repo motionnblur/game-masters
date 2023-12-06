@@ -65,7 +65,7 @@ public class FileUploadController {
 						Paths.get(file.getOriginalFilename()))
 				.normalize().toAbsolutePath();
 
-		ProcessBuilder processBuilder = new ProcessBuilder("ffmpeg", "-ss", "00:00", "-i", destinationFile.toString(), "-vframes", "1", path +"/"+file.getOriginalFilename()+".png");
+		ProcessBuilder processBuilder = new ProcessBuilder("ffmpeg", "-ss", "00:00", "-i", destinationFile.toString(),"-vf","scale=320:200", "-vframes", "1", path +"/"+file.getOriginalFilename()+".png");
 		try {
 			Process process = processBuilder.start();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
