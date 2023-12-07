@@ -10,6 +10,7 @@ export default function page() {
   const url = "http://localhost:8080/api/authenticate";
   const [userName, setUserName] = useState("");
   const [file, setFile] = useState();
+  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   useEffect(() => {
     //setUserName(getCookie("user-id"));
@@ -55,6 +56,12 @@ export default function page() {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        onUploadProgress: (progressEvent) => {
+          let percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setUploadPercentage(percentCompleted);
+        },
       })
       .then((res) => {
         console.log(res.status);
@@ -77,6 +84,7 @@ export default function page() {
             <input type="submit" value="Upload" />
           </form>
         </>
+        {uploadPercentage}
       </div>
     </div>
   );
