@@ -84,7 +84,9 @@ export default function page() {
             <input type="submit" value="Upload" />
           </form>
         </>
-        {uploadPercentage}
+        <br />
+        <br />
+        <progress value={uploadPercentage / 100} />
       </div>
     </div>
   );
