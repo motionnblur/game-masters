@@ -11,6 +11,7 @@ export default function page() {
   const [userName, setUserName] = useState("");
   const [file, setFile] = useState();
   const [uploadPercentage, setUploadPercentage] = useState(0);
+  const [fileSelected, setFileSelected] = useState(false);
 
   useEffect(() => {
     //setUserName(getCookie("user-id"));
@@ -68,8 +69,23 @@ export default function page() {
       });
   };
 
+  const UploadStatus = () => {
+    if (fileSelected === false) {
+      return <b>Select a file to upload</b>;
+    }
+    if (uploadPercentage !== 100) {
+      return <progress value={uploadPercentage / 100} />;
+    } else {
+      return <b>Upload Completed</b>;
+    }
+  };
+
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
+    setFileSelected(true);
+    if (uploadPercentage > 0) {
+      setUploadPercentage(0);
+    }
   };
 
   return (
@@ -86,7 +102,7 @@ export default function page() {
         </>
         <br />
         <br />
-        <progress value={uploadPercentage / 100} />
+        <UploadStatus />
       </div>
     </div>
   );
