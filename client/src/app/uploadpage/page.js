@@ -98,7 +98,7 @@ export default function page() {
           <form onSubmit={handleSubmit}>
             <div className="w-full h-full flex flex-col items-center justify-center mt-2">
               <input
-                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 type="file"
                 name="file"
                 onChange={handleFileChange}
