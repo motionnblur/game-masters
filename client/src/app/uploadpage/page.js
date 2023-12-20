@@ -40,6 +40,11 @@ export default function page() {
   }, []);
 
   const handleSubmit = async (event) => {
+    if (file == null) {
+      alert("please select a file");
+      return;
+    }
+
     event.preventDefault();
 
     const formData = new FormData();
@@ -74,7 +79,7 @@ export default function page() {
       return <b className="mt-3">Select a file to upload</b>;
     }
     if (uploadPercentage !== 100) {
-      return <progress value={uploadPercentage / 100} />;
+      return <progress className="mt-3" value={uploadPercentage / 100} />;
     } else {
       return <b className="mt-3">Upload Completed</b>;
     }
