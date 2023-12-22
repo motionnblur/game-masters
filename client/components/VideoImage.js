@@ -12,18 +12,25 @@ export default function VideoImage(props) {
   };
   const ImageMenu = () => {
     return (
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.3)",
-          zIndex: 10,
-        }}
-        onMouseLeave={hideImageMenu}
-      />
+      <div className="w-full h-full">
+        <div
+          className="w-full h-full flex justify-center items-center"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            zIndex: 10,
+          }}
+          onMouseLeave={hideImageMenu}
+        >
+          <p class="text-1xl font-medium text-gray-900 dark:text-white">
+            {props.video_name}
+          </p>
+        </div>
+      </div>
     );
   };
 
