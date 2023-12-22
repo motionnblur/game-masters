@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import VideoImage from "../../../components/VideoImage";
 
 const url = "http://localhost:8080/api/authenticate";
 
@@ -79,11 +80,7 @@ export default function page() {
           style={{ height: "80%", width: "500px", overflowY: "scroll" }}
         >
           {byte.map((data, index) => (
-            <img
-              key={index}
-              src={data}
-              style={{ width: "100%", marginBottom: "0.5rem" }}
-            />
+            <VideoImage data={data} index={index} />
           ))}
         </div>
       </div>
