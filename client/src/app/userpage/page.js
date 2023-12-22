@@ -69,18 +69,24 @@ export default function page() {
   }, [videos]);
 
   return (
-    <div className="flex flex-col justify-center align-middle items-center">
-      <b>{userName}</b>
-      <br />
-      <b>## your videos ##</b>
-
-      {byte.map((data) => {
-        return (
-          <>
-            <img src={data} width="500" height="500"></img>
-          </>
-        );
-      })}
+    <div className="w-full h-full bg-slate-800 flex overflow-hidden">
+      <div className="flex flex-col align-middle items-center w-full h-full mt-3 mb-3">
+        <b>{userName}</b>
+        <br />
+        <b>## your videos ##</b>
+        <div
+          className="flex flex-col mt-4"
+          style={{ height: "80%", width: "500px", overflowY: "scroll" }}
+        >
+          {byte.map((data, index) => (
+            <img
+              key={index}
+              src={data}
+              style={{ width: "100%", marginBottom: "0.5rem" }}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
