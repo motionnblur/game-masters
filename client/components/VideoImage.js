@@ -10,6 +10,22 @@ export default function VideoImage(props) {
   const hideImageMenu = () => {
     setShowMenu(false);
   };
+  const ImageMenu = () => {
+    return (
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.3)",
+          zIndex: 10,
+        }}
+        onMouseLeave={hideImageMenu}
+      />
+    );
+  };
 
   return (
     <div style={{ position: "relative", display: "inline-block" }}>
@@ -19,20 +35,7 @@ export default function VideoImage(props) {
         style={{ width: "100%" }}
         onMouseEnter={showImageMenu}
       />
-      {showMenu && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            zIndex: 10,
-          }}
-          onMouseLeave={hideImageMenu}
-        />
-      )}
+      {showMenu && <ImageMenu />}
     </div>
   );
 }
