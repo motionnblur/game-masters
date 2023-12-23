@@ -17,8 +17,8 @@ export default function VideoImage(props) {
         className="absolute inset-0 flex flex-col justify-center items-center bg-opacity-70 bg-gray-900 text-white"
         onMouseLeave={hideImageMenu}
       >
-        <div className="h-1/2 mt-4">
-          <p className="text-1xl font-medium text-gray-900 dark:text-white">
+        <div className="h-1/2 mt-4 ml-4 mr-4">
+          <p className="text-1xl font-medium text-white dark:text-white">
             {props.video_name}
           </p>
         </div>
