@@ -17,10 +17,13 @@ export default function VideoImage(props) {
         className="absolute inset-0 flex flex-col justify-center items-center bg-opacity-70 bg-gray-900 text-white"
         onMouseLeave={hideImageMenu}
       >
-        <p className="text-1xl font-medium text-gray-900 dark:text-white">
-          {props.video_name}
-        </p>
-        <div className="flex flex-row justify-center items-center gap-2">
+        <div className="h-1/2 mt-4">
+          <p className="text-1xl font-medium text-gray-900 dark:text-white">
+            {props.video_name}
+          </p>
+        </div>
+
+        <div className="flex flex-row justify-center items-center gap-2 h-1/2 mb-4">
           <button
             type="button"
             className="text-gray-900 bg-white border 
