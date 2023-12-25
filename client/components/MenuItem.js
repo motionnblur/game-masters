@@ -2,6 +2,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { increment } from "../counterSlice";
+import { Camera } from "react-feather";
 
 export default function MenuItem() {
   const dispatch = useDispatch();
@@ -11,6 +12,8 @@ export default function MenuItem() {
       onClick={() => {
         dispatch(increment());
       }}
-    ></div>
+    >
+      <Camera />
+    </div>
   );
 }

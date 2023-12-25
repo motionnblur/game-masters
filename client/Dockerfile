@@ -8,5 +8,6 @@ COPY . .
 RUN npm install
 RUN npm install @reduxjs/toolkit
 RUN npm install react-redux
+RUN npm install react-feather
 
 CMD ["npm","run","dev"]
