@@ -7,7 +7,9 @@ export default function page() {
   return (
     <>
       <Menubar />
-      <div className="w-full h-full flex flex-col sm:gap-3 bg-cyan-600"></div>
+      <div className="w-full h-full flex flex-col items-center justify-center sm:gap-3 bg-slate-200">
+        <div className="w-[100vh] h-[65vh] bg-slate-300"></div>
+      </div>
     </>
   );
 }
