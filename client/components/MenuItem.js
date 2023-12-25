@@ -9,7 +9,7 @@ export default function MenuItem(props) {
   var color = "bg-slate-100";
 
   if (currentstate === 0 && props.id === 0) {
-    //alert("ok");
+    color = "bg-lime-400";
   }
 
   return (
