@@ -2,18 +2,19 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { increment } from "../counterSlice";
-import { Camera } from "react-feather";
 
-export default function MenuItem() {
+export default function MenuItem(props) {
   const dispatch = useDispatch();
   return (
     <div
-      className=" w-8 h-8 bg-slate-100 rounded-full cursor-pointer"
+      className="w-8 h-8 bg-slate-100 rounded-full cursor-pointer"
       onClick={() => {
         dispatch(increment());
       }}
     >
-      <Camera />
+      <div className="w-full h-full flex justify-center items-center">
+        {props.icon}
+      </div>
     </div>
   );
 }
