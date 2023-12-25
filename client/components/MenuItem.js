@@ -7,7 +7,7 @@ export default function MenuItem(props) {
   const dispatch = useDispatch();
   return (
     <div
-      className="w-8 h-8 bg-slate-100 rounded-full cursor-pointer"
+      className="w-8 h-8 bg-slate-100 rounded-full cursor-pointer hover:scale-90 transition duration-2000 ease-in-out"
       onClick={() => {
         dispatch(increment());
       }}
