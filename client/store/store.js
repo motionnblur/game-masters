@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import menuStateReducer from "../menuStateSlice";
+import menuStateReducer from "../states/menuStateSlice";
 
 export default configureStore({
   reducer: {

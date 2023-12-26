@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setmenustate } from "../menuStateSlice";
+import { setmenustate } from "../states/menuStateSlice";
+import { useRouter } from "next/navigation";
 
 export default function MenuItem(props) {
+  const router = useRouter();
   const currentstate = useSelector((state) => state.menustate.value);
   const dispatch = useDispatch();
   var de_activecolor = "bg-slate-100";
@@ -12,16 +14,28 @@ export default function MenuItem(props) {
 
   switch (currentstate) {
     case 0:
-      if (props.id === 0) current_color = active_color;
+      if (props.id === 0) {
+        current_color = active_color;
+        router.push("/destination");
+      }
       break;
     case 1:
-      if (props.id === 1) current_color = active_color;
+      if (props.id === 1) {
+        current_color = active_color;
+        router.push("/videos");
+      }
       break;
     case 2:
-      if (props.id === 2) current_color = active_color;
+      if (props.id === 2) {
+        current_color = active_color;
+        router.push("/uploadpage");
+      }
       break;
     case 3:
-      if (props.id === 3) current_color = active_color;
+      if (props.id === 3) {
+        current_color = active_color;
+        router.push("/settings");
+      }
       break;
   }
 
