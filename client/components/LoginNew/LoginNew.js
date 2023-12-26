@@ -1,5 +1,6 @@
 import React from "react";
 import LoginSignButtons from "./LoginSignButtons";
+import LoginBody from "./LoginBody";
 
 export default function LoginNew() {
   return (
@@ -7,27 +8,12 @@ export default function LoginNew() {
       className="absolute w-[32vh] h-[42vh] z-30 bg-cyan-500 rounded-md shadow-slate-500
            shadow-md flex flex-col p-5 gap-3"
     >
-      <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-        <div className="w-full h-11  rounded-md flex flex-row gap-2">
+      <div className="w-full h-full flex flex-col items-center gap-4">
+        <div className="w-full h-12  rounded-md flex flex-row gap-2">
           <LoginSignButtons />
         </div>
-        <div className="w-full h-14 bg-slate-300 rounded-md p-2">
-          <input
-            type="text"
-            id="mail"
-            name="mail"
-            placeholder="E mail"
-            className="w-full h-full bg-slate-300 rounded-md outline-none"
-          />
-        </div>
-        <div className="w-full h-14 bg-slate-300 rounded-md p-2">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-            className="w-full h-full bg-slate-300 rounded-md outline-none"
-          />
+        <div className="w-full h-full  rounded-md flex flex-col gap-2">
+          <LoginBody />
         </div>
       </div>
       <div className="w-full h-24 flex justify-center items-center">
