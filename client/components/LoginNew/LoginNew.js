@@ -1,8 +1,11 @@
-import React from "react";
+import { React, useState } from "react";
 import LoginSignButtons from "./LoginSignButtons";
 import LoginBody from "./LoginBody";
+import SignupBody from "./SignupBody";
 
 export default function LoginNew() {
+  const [signupState, setSignupState] = useState(false);
+
   return (
     <div
       className="absolute w-[32vh] h-[42vh] z-30 bg-cyan-500 rounded-md shadow-slate-500
@@ -10,10 +13,10 @@ export default function LoginNew() {
     >
       <div className="w-full h-full flex flex-col items-center gap-4">
         <div className="w-full h-12  rounded-md flex flex-row gap-2">
-          <LoginSignButtons />
+          <LoginSignButtons setSignupState={setSignupState} />
         </div>
         <div className="w-full h-full  rounded-md flex flex-col gap-2">
-          <LoginBody />
+          {signupState ? <SignupBody /> : <LoginBody />}
         </div>
       </div>
       <div className="w-full h-24 flex justify-center items-center">

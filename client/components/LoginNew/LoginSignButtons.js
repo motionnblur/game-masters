@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 
-export default function LoginSignButtons() {
+export default function LoginSignButtons(props) {
   const [activeIndis, setActiveIndis] = useState(0);
   var active = "bg-lime-400";
   var deactive = "bg-slate-300";
@@ -12,6 +12,7 @@ export default function LoginSignButtons() {
         } rounded-md `}
         onClick={() => {
           setActiveIndis(0);
+          props.setSignupState(false);
         }}
       >
         Login
@@ -22,6 +23,7 @@ export default function LoginSignButtons() {
         } rounded-md `}
         onClick={() => {
           setActiveIndis(1);
+          props.setSignupState(true);
         }}
       >
         Sign up
