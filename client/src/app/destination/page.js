@@ -15,11 +15,15 @@ export default function page() {
         </div>
         {currentstate && (
           <div
-            className="absolute w-[35vh] h-[50vh] z-30 bg-cyan-500 rounded-md shadow-slate-500
+            className="absolute w-[32vh] h-[45vh] z-30 bg-cyan-500 rounded-md shadow-slate-500
            shadow-md flex flex-col p-6 gap-3"
           >
-            <div className="w-full h-full bg-slate-100"></div>
-            <div className="w-full h-24 bg-slate-200 flex justify-center items-center">
+            <div className="w-full h-full flex flex-col justify-center items-center gap-4">
+              <div className="w-full h-14 bg-lime-600"></div>
+              <div className="w-full h-14 bg-slate-300"></div>
+              <div className="w-full h-14 bg-slate-300"></div>
+            </div>
+            <div className="w-full h-24 flex justify-center items-center">
               <button className="w-full h-12 bg-slate-500">Login</button>
             </div>
           </div>
