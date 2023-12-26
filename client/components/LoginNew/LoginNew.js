@@ -8,7 +8,7 @@ export default function LoginNew() {
 
   return (
     <div
-      className="absolute w-[32vh] h-[42vh] z-30 bg-cyan-500 rounded-md shadow-slate-500
+      className="absolute w-[32vh] h-[40vh] z-30 bg-cyan-500 rounded-md shadow-slate-500
            shadow-md flex flex-col p-5 gap-3"
     >
       <div className="w-full h-full flex flex-col items-center gap-4">
@@ -20,7 +20,9 @@ export default function LoginNew() {
         </div>
       </div>
       <div className="w-full h-24 flex justify-center items-center">
-        <button className="w-full h-12 bg-slate-300 rounded-md">Login</button>
+        <button className="w-full h-12 bg-slate-300 rounded-md">
+          {signupState ? <b>Sign up</b> : <b>Login</b>}
+        </button>
       </div>
     </div>
   );
