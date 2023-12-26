@@ -6,15 +6,28 @@ import { setmenustate } from "../menuStateSlice";
 export default function MenuItem(props) {
   const currentstate = useSelector((state) => state.menustate.value);
   const dispatch = useDispatch();
-  var color = "bg-slate-100";
+  var de_activecolor = "bg-slate-100";
+  var active_color = "bg-lime-400";
+  var current_color = de_activecolor;
 
-  if (currentstate === 0 && props.id === 0) {
-    color = "bg-lime-400";
+  switch (currentstate) {
+    case 0:
+      if (props.id === 0) current_color = active_color;
+      break;
+    case 1:
+      if (props.id === 1) current_color = active_color;
+      break;
+    case 2:
+      if (props.id === 2) current_color = active_color;
+      break;
+    case 3:
+      if (props.id === 3) current_color = active_color;
+      break;
   }
 
   return (
     <div
-      className={`w-8 h-8 ${color} rounded-full cursor-pointer hover:scale-90 transition duration-2000 ease-in-out`}
+      className={`w-8 h-8 ${current_color} rounded-full cursor-pointer hover:scale-90 transition duration-2000 ease-in-out`}
       onClick={() => {
         dispatch(setmenustate(props.id));
       }}
@@ -22,7 +35,6 @@ export default function MenuItem(props) {
       <div className="w-full h-full flex justify-center items-center">
         {props.icon}
       </div>
-      {currentstate}
     </div>
   );
 }
