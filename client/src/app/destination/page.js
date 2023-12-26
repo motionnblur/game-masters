@@ -16,8 +16,13 @@ export default function page() {
         {currentstate && (
           <div
             className="absolute w-[35vh] h-[50vh] z-30 bg-cyan-500 rounded-md shadow-slate-500
-           shadow-md flex flex-col p-4"
-          ></div>
+           shadow-md flex flex-col p-6 gap-3"
+          >
+            <div className="w-full h-full bg-slate-100"></div>
+            <div className="w-full h-24 bg-slate-200 flex justify-center items-center">
+              <button className="w-full h-12 bg-slate-500">Login</button>
+            </div>
+          </div>
         )}
       </div>
     </>
