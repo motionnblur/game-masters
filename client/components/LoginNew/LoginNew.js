@@ -17,7 +17,7 @@ export default function LoginNew() {
         </div>
       </div>
       <div className="w-full h-24 flex justify-center items-center">
-        <button className="w-full h-12 bg-slate-500 rounded-md">Login</button>
+        <button className="w-full h-12 bg-slate-300 rounded-md">Login</button>
       </div>
     </div>
   );
