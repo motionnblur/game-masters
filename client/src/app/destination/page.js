@@ -14,7 +14,7 @@ export default function page() {
           <Card text={<b>dota</b>} id={1} />
         </div>
         {currentstate && (
-          <div className="absolute w-3 h-3 z-30 bg-black">a</div>
+          <div className="absolute w-[35vh] h-[50vh] z-30 bg-cyan-500"></div>
         )}
       </div>
     </>
