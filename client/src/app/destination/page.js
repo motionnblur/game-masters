@@ -2,7 +2,7 @@
 import React from "react";
 import Card from "../../../components/Card";
 import { useSelector } from "react-redux";
-import LoginNew from "../../../components/LoginNew";
+import LoginNew from "../../../components/LoginNew/LoginNew";
 
 export default function page() {
   const currentstate = useSelector((state) => state.loginstate.value);
