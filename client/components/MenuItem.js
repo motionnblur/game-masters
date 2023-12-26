@@ -8,8 +8,8 @@ export default function MenuItem(props) {
   const router = useRouter();
   const currentstate = useSelector((state) => state.menustate.value);
   const dispatch = useDispatch();
-  var de_activecolor = "bg-slate-100";
-  var active_color = "bg-lime-400";
+  const de_activecolor = "bg-slate-100";
+  const active_color = "bg-lime-400";
   var current_color = de_activecolor;
 
   switch (currentstate) {

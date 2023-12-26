@@ -4,6 +4,7 @@ import Card from "../../../components/Card";
 import { useSelector } from "react-redux";
 
 export default function page() {
+  var active_color = "bg-lime-400";
   const currentstate = useSelector((state) => state.loginstate.value);
 
   return (
@@ -20,7 +21,7 @@ export default function page() {
           >
             <div className="w-full h-full flex flex-col justify-center items-center gap-4">
               <div className="w-full h-11  rounded-md flex flex-row gap-2">
-                <button className="w-full h-full bg-slate-50 rounded-md">
+                <button className={`w-full h-full ${active_color} rounded-md `}>
                   Login
                 </button>
                 <button className="w-full h-full bg-slate-50 rounded-md">
