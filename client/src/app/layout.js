@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import store from "../../store/store";
 import { Provider } from "react-redux";
+import Menubar from "../../components/Menubar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider store={store}>{children}</Provider>
+        <Provider store={store}>
+          <Menubar />
+          {children}
+        </Provider>
       </body>
     </html>
   );
