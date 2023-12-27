@@ -16,7 +16,7 @@ export default function MenuItem(props) {
     case 0:
       if (props.id === 0) {
         current_color = active_color;
-        router.push("/destination");
+        router.push("/");
       }
       break;
     case 1:
