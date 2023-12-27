@@ -3,11 +3,15 @@ import LoginSignButtons from "../Childrens/LoginSignButtons";
 import LoginBody from "../Childrens/LoginBody";
 import SignupBody from "../Childrens/SignupBody";
 import { validateEmail } from "../../../api/Regex";
+import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function LoginNew() {
+  const router = useRouter();
   const [signupState, setSignupState] = useState(false);
-  const url = "http://localhost:8080/api/create_user";
+  const urlSign = "http://localhost:8080/api/create_user";
+  const urlLogin = "http://localhost:8080/api/login_user";
 
   var nameRefVal, lastNameRef, mailRefVal, passRefVal;
   const setNameRefVal = (d) => {
@@ -24,13 +28,43 @@ export default function LoginNew() {
   };
 
   const doSign = () => {
-    sendToServer();
+    signServer();
   };
   const doLogin = () => {
-    alert("login");
+    loginServer();
+  };
+  const loginServer = () => {
+    if (!mailRefVal) return;
+    if (!passRefVal) return;
+
+    if (!validateEmail(mailRefVal)) return;
+
+    axios
+      .post(
+        urlLogin,
+        {
+          mail: mailRefVal,
+          passw: passRefVal,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        const cookie = getCookie("user-id");
+        //console.log(cookie);
+        //console.log(response);
+
+        if (response.data !== "successful") return;
+
+        router.push("/userpage");
+      });
   };
 
-  const sendToServer = () => {
+  const signServer = () => {
     console.log(nameRefVal, lastNameRef, mailRefVal, passRefVal);
     if (!nameRefVal) return;
     if (!lastNameRef) return;
@@ -39,7 +73,7 @@ export default function LoginNew() {
     if (!validateEmail(mailRefVal)) return;
 
     axios
-      .post(url, {
+      .post(urlSign, {
         userName: nameRefVal,
         lastName: lastNameRef,
         mail: mailRefVal,
@@ -68,7 +102,10 @@ export default function LoginNew() {
               setPassRefVal={setPassRefVal}
             />
           ) : (
-            <LoginBody />
+            <LoginBody
+              setMailRefVal={setMailRefVal}
+              setPassRefVal={setPassRefVal}
+            />
           )}
         </div>
       </div>

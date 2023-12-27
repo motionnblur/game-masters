@@ -1,10 +1,6 @@
 import { React, useRef } from "react";
 
 export default function SignupBody(props) {
-  const nameRef = useRef(null);
-  const mailRef = useRef(null);
-  const passRef = useRef(null);
-
   return (
     <>
       <div className="w-full h-10 bg-slate-300 rounded-md p-2">
