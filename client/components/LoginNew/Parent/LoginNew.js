@@ -1,7 +1,7 @@
 import { React, useState } from "react";
-import LoginSignButtons from "./LoginSignButtons";
-import LoginBody from "./LoginBody";
-import SignupBody from "./SignupBody";
+import LoginSignButtons from "../Childrens/LoginSignButtons";
+import LoginBody from "../Childrens/LoginBody";
+import SignupBody from "../Childrens/SignupBody";
 
 export default function LoginNew() {
   const [signupState, setSignupState] = useState(false);

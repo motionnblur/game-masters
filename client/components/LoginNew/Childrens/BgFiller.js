@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setloginstate } from "../../states/loginStateSlice";
+import { setloginstate } from "../../../states/loginStateSlice";
 
 export default function BgFiller() {
   const dispatch = useDispatch();
