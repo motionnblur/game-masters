@@ -16,6 +16,9 @@ export default function LoginNew() {
     passRefVal = d;
   };
 
+  const doSign = () => {};
+  const doLogin = () => {};
+
   return (
     <div
       className="absolute w-[32vh] h-[40vh] z-30 bg-cyan-500 rounded-md shadow-slate-500
@@ -41,7 +44,9 @@ export default function LoginNew() {
         <button
           className="w-full h-12 bg-slate-300 rounded-md"
           onClick={() => {
-            console.log(nameRefVal);
+            {
+              signupState ? doSign : doLogin;
+            }
           }}
         >
           {signupState ? <b>Sign up</b> : <b>Login</b>}
