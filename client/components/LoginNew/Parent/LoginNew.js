@@ -5,6 +5,16 @@ import SignupBody from "../Childrens/SignupBody";
 
 export default function LoginNew() {
   const [signupState, setSignupState] = useState(false);
+  var nameRefVal, mailRefVal, passRefVal;
+  const setNameRefVal = (d) => {
+    nameRefVal = d;
+  };
+  const setMailRefVal = (d) => {
+    mailRefVal = d;
+  };
+  const setPassRefVal = (d) => {
+    passRefVal = d;
+  };
 
   return (
     <div
@@ -16,11 +26,24 @@ export default function LoginNew() {
           <LoginSignButtons setSignupState={setSignupState} />
         </div>
         <div className="w-full h-full  rounded-md flex flex-col gap-2">
-          {signupState ? <SignupBody /> : <LoginBody />}
+          {signupState ? (
+            <SignupBody
+              setNameRefVal={setNameRefVal}
+              setMailRefVal={setMailRefVal}
+              setPassRefVal={setPassRefVal}
+            />
+          ) : (
+            <LoginBody />
+          )}
         </div>
       </div>
       <div className="w-full h-24 flex justify-center items-center">
-        <button className="w-full h-12 bg-slate-300 rounded-md">
+        <button
+          className="w-full h-12 bg-slate-300 rounded-md"
+          onClick={() => {
+            console.log(nameRefVal);
+          }}
+        >
           {signupState ? <b>Sign up</b> : <b>Login</b>}
         </button>
       </div>
