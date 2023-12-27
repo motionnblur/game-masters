@@ -2,11 +2,18 @@ import { React, useState } from "react";
 import LoginSignButtons from "../Childrens/LoginSignButtons";
 import LoginBody from "../Childrens/LoginBody";
 import SignupBody from "../Childrens/SignupBody";
+import { validateEmail } from "../../../api/Regex";
+import axios from "axios";
 
 export default function LoginNew() {
   const [signupState, setSignupState] = useState(false);
-  var nameRefVal, mailRefVal, passRefVal;
+  const url = "http://localhost:8080/api/create_user";
+
+  var nameRefVal, lastNameRef, mailRefVal, passRefVal;
   const setNameRefVal = (d) => {
+    nameRefVal = d;
+  };
+  const setLastNameRefVal = (d) => {
     nameRefVal = d;
   };
   const setMailRefVal = (d) => {
@@ -17,10 +24,29 @@ export default function LoginNew() {
   };
 
   const doSign = () => {
-    alert("sign");
+    sendToServer();
   };
   const doLogin = () => {
     alert("login");
+  };
+
+  const sendToServer = () => {
+    if (!nameRefVal) return;
+    if (!lastNameRef) return;
+    if (!mailRefVal) return;
+    if (!passRefVal) return;
+    if (!validateEmail(mailRefVal)) return;
+
+    axios
+      .post(url, {
+        userName: nameRefVal,
+        lastName: lastNameRef,
+        mail: mailRefVal,
+        passw: passRefVal,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
   };
 
   return (
