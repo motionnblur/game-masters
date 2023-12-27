@@ -16,8 +16,12 @@ export default function LoginNew() {
     passRefVal = d;
   };
 
-  const doSign = () => {};
-  const doLogin = () => {};
+  const doSign = () => {
+    alert("sign");
+  };
+  const doLogin = () => {
+    alert("login");
+  };
 
   return (
     <div
@@ -45,7 +49,7 @@ export default function LoginNew() {
           className="w-full h-12 bg-slate-300 rounded-md"
           onClick={() => {
             {
-              signupState ? doSign : doLogin;
+              signupState ? doSign() : doLogin();
             }
           }}
         >
