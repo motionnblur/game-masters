@@ -14,7 +14,7 @@ export default function LoginNew() {
     nameRefVal = d;
   };
   const setLastNameRefVal = (d) => {
-    nameRefVal = d;
+    lastNameRef = d;
   };
   const setMailRefVal = (d) => {
     mailRefVal = d;
@@ -31,6 +31,7 @@ export default function LoginNew() {
   };
 
   const sendToServer = () => {
+    console.log(nameRefVal, lastNameRef, mailRefVal, passRefVal);
     if (!nameRefVal) return;
     if (!lastNameRef) return;
     if (!mailRefVal) return;
@@ -62,6 +63,7 @@ export default function LoginNew() {
           {signupState ? (
             <SignupBody
               setNameRefVal={setNameRefVal}
+              setLastNameRefVal={setLastNameRefVal}
               setMailRefVal={setMailRefVal}
               setPassRefVal={setPassRefVal}
             />
