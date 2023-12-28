@@ -4,12 +4,14 @@ import Card from "../../components/Card";
 import { useSelector } from "react-redux";
 import LoginNew from "../../components/LoginNew/Parent/LoginNew";
 import BgFiller from "../../components/LoginNew/Childrens/BgFiller";
+import Player from "../../components/Player";
 
 export default function page() {
   const currentstate = useSelector((state) => state.loginstate.value);
 
   return (
     <>
+      <Player />
       {currentstate && <BgFiller />}
       <div className="w-full h-full flex flex-col items-center justify-center sm:gap-3 bg-slate-200">
         <div className="w-[70vh] h-[40vh] flex gap-4 justify-center items-center">

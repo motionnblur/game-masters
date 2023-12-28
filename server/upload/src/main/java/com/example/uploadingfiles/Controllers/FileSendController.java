@@ -6,6 +6,7 @@ import com.example.uploadingfiles.Core.storage.StorageProperties;
 import com.example.uploadingfiles.Core.storage.StorageService;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,14 @@ public class FileSendController {
     ) {
         this.storageService = storageService;
         this.storageProperties = storageProperties;
+    }
+    @GetMapping("/video")
+    @ResponseBody
+    public ResponseEntity<Resource> getVideo() throws IOException {
+        Resource file = storageService.loadAsResource("A.webm", "can");
+        if(file==null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(new ByteArrayResource(file.getContentAsByteArray()));
     }
     @GetMapping("/getFile")
     @ResponseBody
