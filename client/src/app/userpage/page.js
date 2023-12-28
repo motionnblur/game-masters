@@ -3,14 +3,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import VideoImage from "../../../components/VideoImage";
 
 const url = "http://localhost:8080/api/authenticate";
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
   const [userName, setUserName] = useState("");
   const [videos, setVideos] = useState([]);
-  const [byte, setByte] = useState([]);
+  const [videoData, setVideoData] = useState([]);
 
   useEffect(() => {
     axios
@@ -30,7 +31,7 @@ export default function page() {
         if (res.data) {
           setUserName(res.data);
         } else {
-          alert("you are not allowed to see this page");
+          alert("You are not allowed to see this page");
           router.push("/");
         }
       });
@@ -54,33 +55,57 @@ export default function page() {
   }, [userName]);
 
   useEffect(() => {
-    videos.forEach((item) => {
-      axios
-        .get("http://localhost:8081/getVideoImg", {
+    const fetchVideoData = async () => {
+      const newVideoData = [];
+      for (const video of videos) {
+        const response = await axios.get("http://localhost:8081/getVideoImg", {
           params: {
-            fileName: item.fileName,
+            fileName: video.fileName,
             userName: "can",
           },
-        })
-        .then((res) => {
-          setByte((oldArr) => [...oldArr, "data:image/png;base64," + res.data]);
         });
-    });
+        const base64Data = "data:image/png;base64," + response.data;
+        newVideoData.push({
+          fileName: video.fileName,
+          data: base64Data,
+        });
+      }
+      setVideoData(newVideoData);
+    };
+
+    if (videos.length > 0) {
+      fetchVideoData();
+    }
   }, [videos]);
 
-  return (
-    <div className="flex flex-col justify-center align-middle items-center">
-      <b>{userName}</b>
-      <br />
-      <b>## your videos ##</b>
+  const truncateString = (str, maxLength) => {
+    if (str.length > maxLength) {
+      return str.substring(0, maxLength) + "...";
+    } else {
+      return str;
+    }
+  };
 
-      {byte.map((data) => {
-        return (
-          <>
-            <img src={data} width="500" height="500"></img>
-          </>
-        );
-      })}
+  return (
+    <div className="w-full h-full bg-slate-800 flex overflow-hidden">
+      <div className="flex flex-col align-middle items-center w-full h-full mt-3 mb-3">
+        <b>{userName}</b>
+        <br />
+        <b>## your videos ##</b>
+        <div
+          className="flex flex-col mt-4"
+          style={{ height: "80%", width: "500px", overflowY: "scroll" }}
+        >
+          {videoData.map((video, index) => (
+            <VideoImage
+              key={index}
+              data={video.data}
+              index={index}
+              video_name={truncateString(video.fileName, 50)}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
