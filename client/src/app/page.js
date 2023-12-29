@@ -11,7 +11,12 @@ export default function page() {
 
   return (
     <>
-      <Player />
+      <video width={400} controls>
+        <source
+          src="http://localhost:8081/getFile/test.webm"
+          type="video/webm"
+        />
+      </video>
       {currentstate && <BgFiller />}
       <div className="w-full h-full flex flex-col items-center justify-center sm:gap-3 bg-slate-200">
         <div className="w-[70vh] h-[40vh] flex gap-4 justify-center items-center">

@@ -43,12 +43,11 @@ public class FileSendController {
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(new ByteArrayResource(file.getContentAsByteArray()));
     }
-    @GetMapping("/getFile")
+    @GetMapping("/getFile/{fileName}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFile(@RequestParam("fileName") String fileName,
-                                              @RequestParam("userName") String userName) {
+    public ResponseEntity<Resource> serveFile(@PathVariable String fileName) {
 
-        Resource file = storageService.loadAsResource(fileName, userName);
+        Resource file = storageService.loadAsResource(fileName, "can");
 
         if (file == null)
             return ResponseEntity.notFound().build();
