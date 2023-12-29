@@ -48,6 +48,6 @@ services:
       - react
     volumes:
       - ./server/upload:/App
-      - /media/chill/Storage1/my-videos/:/App/upload-dir
+      - /media/storage2/Videos/:/App/upload-dir
 volumes:
   pgdata:
