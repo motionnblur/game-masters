@@ -22,7 +22,7 @@ export default function MenuItem(props) {
     case 1:
       if (props.id === 1) {
         current_color = active_color;
-        router.push("/videos");
+        router.push("/videospage");
       }
       break;
     case 2:
