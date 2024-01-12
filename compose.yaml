@@ -44,6 +44,7 @@ services:
     build: server/upload
     ports:
       - "8081:8080"
+      - "5004:5005"
     depends_on:
       - spring
       - react
