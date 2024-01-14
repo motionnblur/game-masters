@@ -61,7 +61,7 @@ export default function Page() {
         const response = await axios.get("http://localhost:8081/getVideoImg", {
           params: {
             fileName: video.fileName,
-            userName: "can",
+            userName: userName,
           },
         });
         const base64Data = "data:image/png;base64," + response.data;
@@ -101,6 +101,7 @@ export default function Page() {
               key={index}
               data={video.data}
               index={index}
+              user_name={userName}
               video_name={truncateString(video.fileName, 50)}
             />
           ))}

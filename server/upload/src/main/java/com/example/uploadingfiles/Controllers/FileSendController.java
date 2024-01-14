@@ -36,11 +36,11 @@ public class FileSendController {
         this.storageProperties = storageProperties;
     }
 
-    @GetMapping("/getFile/{fileName}")
+    @GetMapping("/getFile/{userName}/{fileName}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String fileName) {
+    public ResponseEntity<Resource> serveFile(@PathVariable String userName,@PathVariable String fileName) {
 
-        Resource file = storageService.loadAsResource(fileName, "can");
+        Resource file = storageService.loadAsResource(fileName, userName);
 
         if (file == null)
             return ResponseEntity.notFound().build();

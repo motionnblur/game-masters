@@ -51,7 +51,9 @@ export default function VideoImage(props) {
           </button>
         </div>
         {showVideo && (
-          <Player src={`http://localhost:8081/getFile/${props.video_name}`} />
+          <Player
+            src={`http://localhost:8081/getFile/${props.user_name}/${props.video_name}`}
+          />
         )}
       </div>
     );
