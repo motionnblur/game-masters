@@ -114,10 +114,12 @@ export default function Page() {
           </div>
         </div>
         {showVideo && (
-          <div className="absolute z-50 w-full h-full bg-gray-950 opacity-70">
-            <Player
-              src={`http://localhost:8081/getFile/${userName}/${videoName}`}
-            />
+          <div className="absolute z-50 w-full h-full bg-gray-950 flex justify-center items-center bg-opacity-90">
+            <div>
+              <Player
+                src={`http://localhost:8081/getFile/${userName}/${videoName}`}
+              />
+            </div>
           </div>
         )}
       </div>
