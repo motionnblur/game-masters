@@ -106,7 +106,8 @@ export default function Page() {
                 data={video.data}
                 index={index}
                 user_name={userName}
-                video_name={truncateString(video.fileName, 50)}
+                //video_name={truncateString(video.fileName, 50)}
+                video_name={video.fileName}
                 setShowVideo={setShowVideo}
                 setVideoName={setVideoName}
               />

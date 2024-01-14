@@ -1,4 +1,12 @@
 import React, { useState } from "react";
+
+const truncateString = (str, maxLength) => {
+  if (str.length > maxLength) {
+    return str.substring(0, maxLength) + "...";
+  } else {
+    return str;
+  }
+};
 export default function VideoImage(props) {
   const [showMenu, setShowMenu] = useState(false);
 
@@ -19,7 +27,7 @@ export default function VideoImage(props) {
         >
           <div className="h-1/2 mt-4 ml-4 mr-4">
             <p className="text-1xl font-medium text-white dark:text-white">
-              {props.video_name}
+              {truncateString(props.video_name, 50)}
             </p>
           </div>
 
