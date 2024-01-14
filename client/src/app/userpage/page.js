@@ -118,7 +118,7 @@ export default function Page() {
             className="absolute z-50 w-full h-full bg-gray-950 flex justify-center items-center bg-opacity-90"
             onClick={() => setShowVideo(false)}
           >
-            <div>
+            <div onClick={(event) => event.stopPropagation()}>
               <Player
                 src={`http://localhost:8081/getFile/${userName}/${videoName}`}
               />
