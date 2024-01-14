@@ -34,7 +34,7 @@ export default function MenuItem(props) {
     case 3:
       if (props.id === 3) {
         current_color = active_color;
-        router.push("/settings");
+        router.push("/userpage");
       }
       break;
   }

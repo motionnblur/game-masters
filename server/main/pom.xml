@@ -72,7 +72,7 @@
 					</excludes>
 					<jvmArguments>
 						-Xdebug
-						-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=0.0.0.0:5005
+						-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005
 					</jvmArguments>
 				</configuration>
 			</plugin>

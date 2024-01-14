@@ -1,12 +1,9 @@
 import React from "react";
 
-export default function Player() {
+export default function Player(props) {
   return (
     <video width={400} controls>
-      <source
-        src="http://192.168.1.106:8081/getFile/test.webm"
-        type="video/webm"
-      />
+      <source src={props.src} type="video/webm" />
     </video>
   );
 }

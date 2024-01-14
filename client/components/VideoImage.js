@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import Player from "./Player";
 
 export default function VideoImage(props) {
   const [showMenu, setShowMenu] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
 
   const showImageMenu = () => {
     setShowMenu(true);
@@ -32,6 +34,7 @@ export default function VideoImage(props) {
             dark:bg-gray-800 dark:text-white dark:border-gray-600 
             dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700
             cursor-pointer mt-20"
+            onClick={() => setShowVideo(!showVideo)}
           >
             Play
           </button>
@@ -47,6 +50,9 @@ export default function VideoImage(props) {
             Change Thumbnail
           </button>
         </div>
+        {showVideo && (
+          <Player src={`http://localhost:8081/getFile/${props.video_name}`} />
+        )}
       </div>
     );
   };
