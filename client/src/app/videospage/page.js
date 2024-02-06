@@ -41,7 +41,7 @@ export default function page() {
       )
       .then((res) => {
         if (res.data) {
-          setUserName(res.data);
+          //setUserName(res.data);
         } else {
           alert("You are not allowed to see this page");
           router.push("/");
