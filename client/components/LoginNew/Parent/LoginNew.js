@@ -83,6 +83,9 @@ export default function LoginNew() {
         console.log(res.data);
         setSignupState(false);
         setActiveIndis(0);
+      })
+      .catch((err) => {
+        alert(err.response.data);
       });
   };
 

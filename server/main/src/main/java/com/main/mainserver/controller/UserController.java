@@ -18,6 +18,7 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,14 +39,14 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/api/create_user")
-    private String createUser(@RequestBody UserEntity userEntity) {
+    private ResponseEntity<String> createUser(@RequestBody UserEntity userEntity) {
         if (userEntity.getUserName() == null || userEntity.getPassw() == null || userEntity.getMail() == null || userEntity.getLastName() == null)
-            return "null";
+            return ResponseEntity.badRequest().body("please fill all the fields");
         if (!userService.validateEmail(userEntity.getMail()))
-            return "please write a correct mail";
+            return ResponseEntity.badRequest().body("please write a valid mail");
         try {
             if (userService.findByUserMail(userEntity.getMail()) != null)
-                return "user with that mail already exists";
+                return ResponseEntity.badRequest().body("user with that mail already exists");
 
             String hashedPassword = passwordEncoder.encode(userEntity.getPassw());
 
@@ -58,9 +59,9 @@ public class UserController {
             UserEntity savedUser = userService.saveUser(newUser);
             userService.createUserDirectory(savedUser.getId());
 
-            return savedUser.getUserName();
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return "error";
+            return ResponseEntity.badRequest().body(e.toString());
         }
     }
 
