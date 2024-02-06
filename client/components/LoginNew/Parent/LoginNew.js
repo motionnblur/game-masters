@@ -10,6 +10,7 @@ import axios from "axios";
 export default function LoginNew() {
   const router = useRouter();
   const [signupState, setSignupState] = useState(false);
+  const [activeIndis, setActiveIndis] = useState(0);
   const urlSign = "http://localhost:8080/api/create_user";
   const urlLogin = "http://localhost:8080/api/login_user";
 
@@ -65,7 +66,6 @@ export default function LoginNew() {
   };
 
   const signServer = () => {
-    console.log(nameRefVal, lastNameRef, mailRefVal, passRefVal);
     if (!nameRefVal) return;
     if (!lastNameRef) return;
     if (!mailRefVal) return;
@@ -81,6 +81,8 @@ export default function LoginNew() {
       })
       .then((res) => {
         console.log(res.data);
+        setSignupState(false);
+        setActiveIndis(0);
       });
   };
 
@@ -91,7 +93,11 @@ export default function LoginNew() {
     >
       <div className="w-full h-full flex flex-col items-center gap-4">
         <div className="w-full h-12  rounded-md flex flex-row gap-2">
-          <LoginSignButtons setSignupState={setSignupState} />
+          <LoginSignButtons
+            setSignupState={setSignupState}
+            activeIndis={activeIndis}
+            setActiveIndis={setActiveIndis}
+          />
         </div>
         <div className="w-full h-full  rounded-md flex flex-col gap-2">
           {signupState ? (
