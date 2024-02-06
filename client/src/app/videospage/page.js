@@ -22,6 +22,7 @@ export default function page() {
   const [videos, setVideos] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:8080/api/getAllVideos").then((res) => {
+      if (!res.data[0]) return;
       setVideos(res.data);
       console.log(res.data);
       const [A, B] = extractStrings(res.data[0].filePath);

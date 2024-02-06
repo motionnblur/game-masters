@@ -23,7 +23,7 @@ services:
 
   postgres:
     image: postgres
-    restart: always
+      #restart: always
     ports:
       - "5432:5432"
     environment:
@@ -35,7 +35,7 @@ services:
 
   redis:
     image: redis:7.2-alpine
-    restart: always
+      #restart: always
     command: redis-server --save 60 1
     ports:
       - "6379:6379"
