@@ -41,7 +41,6 @@ export default function page() {
         "http://localhost:8080/api/getAllThumbnails"
       );
       setThumbnailData(response.data);
-      //console.log(response.data);
     };
 
     fetchAllThumbnailData();
@@ -55,7 +54,6 @@ export default function page() {
 
       const newImageData = [];
       for (const thumb of thumbnailData) {
-        console.log(thumb);
         const response = await axios.get("http://localhost:8081/getVideoImg", {
           params: {
             fileName: thumb.thumbnailName,
