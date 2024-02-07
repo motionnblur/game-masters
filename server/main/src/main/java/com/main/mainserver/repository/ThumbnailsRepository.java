@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface ThumbnailsRepository extends JpaRepository<ThumbnailsEntity, Long> {
     List<ThumbnailsEntity> findByUserEntity(UserEntity userEntity);
-    ThumbnailsEntity findByFileName(String fileName);
 }
