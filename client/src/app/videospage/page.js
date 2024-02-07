@@ -10,6 +10,7 @@ const url = "http://localhost:8080/api/authenticate";
 export default function page() {
   const router = useRouter();
   const [thumbnailData, setThumbnailData] = useState([]);
+  const [imageData, setImageData] = useState([]);
   useEffect(() => {
     axios
       .post(
@@ -48,22 +49,35 @@ export default function page() {
 
   useEffect(() => {
     if (thumbnailData[0] == null) return;
-    const fetchAllVideoImages = async () => {
+
+    const fetchAllImageData = async () => {
+      if (thumbnailData[0] == null) return;
+
       const newImageData = [];
-      console.log(thumbnailData);
       for (const thumb of thumbnailData) {
-        console.log(thumb.thumbnailName);
+        console.log(thumb);
         const response = await axios.get("http://localhost:8081/getVideoImg", {
           params: {
             fileName: thumb.thumbnailName,
             userName: "can",
           },
         });
-        console.log(response.data);
+        const base64Data = "data:image/png;base64," + response.data;
+        newImageData.push({
+          fileName: thumb.thumbnailName,
+          data: base64Data,
+        });
       }
+      setImageData(newImageData);
     };
-    fetchAllVideoImages();
+    fetchAllImageData();
   }, [thumbnailData]);
 
-  return <>test</>;
+  return (
+    <>
+      {imageData.map((image) => (
+        <img src={image.data} width="300" height="300" />
+      ))}
+    </>
+  );
 }
