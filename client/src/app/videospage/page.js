@@ -56,7 +56,7 @@ export default function page() {
         const response = await axios.get("http://localhost:8081/getVideoImg", {
           params: {
             fileName: thumb.thumbnailName,
-            userName: "Hasan",
+            userName: "can",
           },
         });
         console.log(response.data);
