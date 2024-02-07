@@ -4,27 +4,12 @@ import React, { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Player from "../../../components/Player";
 
 const url = "http://localhost:8080/api/authenticate";
 
-function extractStrings(input) {
-  const regex = /^\/App\/upload-dir\/(.*?)\/(.*)$/;
-  const match = input.match(regex);
-
-  if (match) {
-    const A = match[1];
-    const B = match[2];
-
-    return [A, B];
-  }
-
-  return [null, null];
-}
-
 export default function page() {
   const router = useRouter();
-  const [videos, setVideos] = useState([]);
+  const [thumbnailData, setThumbnailData] = useState([]);
   useEffect(() => {
     axios
       .post(
@@ -48,21 +33,37 @@ export default function page() {
         }
       });
   }, []);
+  ////////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    axios.get("http://localhost:8080/api/getAllVideos").then((res) => {
-      if (!res.data[0]) return;
-      setVideos(res.data);
-      console.log(res.data);
-      const [A, B] = extractStrings(res.data[0].filePath);
-    });
-  }, []);
-  return (
-    <>
-      {videos.map((video) => {
-        const [A, B] = extractStrings(video.filePath);
+    const fetchAllThumbnailData = async () => {
+      const response = await axios.get(
+        "http://localhost:8080/api/getAllThumbnails"
+      );
+      setThumbnailData(response.data);
+      //console.log(response.data);
+    };
 
-        return <Player src={`http://localhost:8081/getFile/${A}/${B}`} />;
-      })}
-    </>
-  );
+    fetchAllThumbnailData();
+  }, []);
+
+  useEffect(() => {
+    if (thumbnailData[0] == null) return;
+    const fetchAllVideoImages = async () => {
+      const newImageData = [];
+      console.log(thumbnailData);
+      for (const thumb of thumbnailData) {
+        console.log(thumb.thumbnailName);
+        const response = await axios.get("http://localhost:8081/getVideoImg", {
+          params: {
+            fileName: thumb.thumbnailName,
+            userName: "Hasan",
+          },
+        });
+        console.log(response.data);
+      }
+    };
+    fetchAllVideoImages();
+  }, [thumbnailData]);
+
+  return <>test</>;
 }
