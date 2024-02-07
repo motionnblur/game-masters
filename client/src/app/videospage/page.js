@@ -54,10 +54,11 @@ export default function page() {
 
       const newImageData = [];
       for (const thumb of thumbnailData) {
+        console.log(thumb.userName, thumb.thumbnailName);
         const response = await axios.get("http://localhost:8081/getVideoImg", {
           params: {
             fileName: thumb.thumbnailName,
-            userName: "can",
+            userName: thumb.userName,
           },
         });
         const base64Data = "data:image/png;base64," + response.data;

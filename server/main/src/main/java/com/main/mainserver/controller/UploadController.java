@@ -43,6 +43,7 @@ public class UploadController {
 
         ThumbnailsEntity thumbnailEntity = new ThumbnailsEntity();
         thumbnailEntity.setUserEntity(user);
+        thumbnailEntity.setUserName(user.getUserName());
         thumbnailEntity.setThumbnailName(uploadStatus.getFileName());
         thumbnailEntity.setThumbnailPath(uploadStatus.getFilePath());
 
