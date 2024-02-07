@@ -2,7 +2,7 @@ package com.main.mainserver.service;
 
 import com.main.mainserver.entity.UserEntity;
 import com.main.mainserver.entity.VideosEntity;
-import com.main.mainserver.repository.UploadTableRepository;
+import com.main.mainserver.repository.VideosRepository;
 import com.main.mainserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class UserService {
     @Autowired
     UserRepository userRepository;
-    UploadTableRepository uploadTableRepository;
+    VideosRepository videosRepository;
     public UserEntity saveUser(UserEntity userEntity){
         return userRepository.save(userEntity);
     }
@@ -37,7 +37,7 @@ public class UserService {
         directory.mkdirs();
     }
     public List<VideosEntity> getAllUsers(){
-        return uploadTableRepository.findAll();
+        return videosRepository.findAll();
     }
 
     public boolean validateEmail(String email) {

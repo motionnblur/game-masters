@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UploadTableRepository extends JpaRepository<VideosEntity, Long> {
+public interface VideosRepository extends JpaRepository<VideosEntity, Long> {
     List<VideosEntity> findByUserEntity(UserEntity userEntity);
     VideosEntity findByFileName(String fileName);
 }
