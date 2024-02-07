@@ -15,7 +15,6 @@ public class ThumbnailsEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    private String ownerId;
     private String thumbnailName;
     private String thumbnailPath;
 

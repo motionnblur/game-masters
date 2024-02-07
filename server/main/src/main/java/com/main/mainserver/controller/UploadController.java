@@ -1,8 +1,10 @@
 package com.main.mainserver.controller;
 
 import com.main.mainserver.dao.UploadStatus;
+import com.main.mainserver.entity.ThumbnailsEntity;
 import com.main.mainserver.entity.UserEntity;
 import com.main.mainserver.entity.VideosEntity;
+import com.main.mainserver.repository.ThumbnailsRepository;
 import com.main.mainserver.repository.VideosRepository;
 import com.main.mainserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class UploadController {
     UserService userService;
     @Autowired
     VideosRepository videosRepository;
+    @Autowired
+    ThumbnailsRepository thumbnailsRepository;
     @GetMapping("/api/getUploadTable")
     private @ResponseBody List<VideosEntity> getUserTable(@RequestParam String userName){
         UserEntity user = userService.findUser(userName);
@@ -36,6 +40,13 @@ public class UploadController {
         videosEntity.setFilePath(uploadStatus.getFilePath());
 
         videosRepository.save(videosEntity);
+
+        ThumbnailsEntity thumbnailEntity = new ThumbnailsEntity();
+        thumbnailEntity.setUserEntity(user);
+        thumbnailEntity.setThumbnailName(uploadStatus.getFileName()+".png");
+        thumbnailEntity.setThumbnailPath(uploadStatus.getFilePath());
+
+        thumbnailsRepository.save(thumbnailEntity);
 
         return "uploaded";
     }

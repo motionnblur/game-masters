@@ -2,7 +2,6 @@ package com.main.mainserver.repository;
 
 import com.main.mainserver.entity.ThumbnailsEntity;
 import com.main.mainserver.entity.UserEntity;
-import com.main.mainserver.entity.VideosEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
