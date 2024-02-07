@@ -58,4 +58,11 @@ public class UploadController {
 
         return userEntityList;
     }
+    @GetMapping("/api/getAllThumbnails")
+    private List<ThumbnailsEntity> getAllThumbnails(){
+        List<ThumbnailsEntity> thumbnailsEntityList;
+        thumbnailsEntityList = thumbnailsRepository.findAll();
+
+        return thumbnailsEntityList;
+    }
 }

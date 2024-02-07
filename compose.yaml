@@ -49,7 +49,11 @@ services:
       - spring
       - react
     volumes:
-      - ./server/upload:/App
-      - /media/storage2/Videos/:/App/upload-dir
+      #- ./server/upload:/App
+      #- /media/storage2/Videos/:/App/upload-dir
+      - upload:/App
+      - videos:/App/upload-dir
 volumes:
   pgdata:
+  upload:
+  videos:
