@@ -8,6 +8,7 @@ import com.main.mainserver.entity.UserEntity;
 import com.main.mainserver.entity.UserTableEntity;
 import com.main.mainserver.repository.SessionRepository;
 import com.main.mainserver.repository.UploadTableRepository;
+import com.main.mainserver.repository.UserRepository;
 import com.main.mainserver.service.RedisService;
 import com.main.mainserver.service.UserService;
 import jakarta.servlet.http.Cookie;

@@ -39,4 +39,12 @@ public class UploadController {
 
         return "uploaded";
     }
+
+    @GetMapping("/api/getAllVideos")
+    private List<UserTableEntity> getAllVideos(){
+        List<UserTableEntity> userEntityList;
+        userEntityList = uploadTableRepository.findAll();
+
+        return userEntityList;
+    }
 }

@@ -1,11 +1,14 @@
 package com.main.mainserver.service;
 
 import com.main.mainserver.entity.UserEntity;
+import com.main.mainserver.entity.UserTableEntity;
+import com.main.mainserver.repository.UploadTableRepository;
 import com.main.mainserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +16,7 @@ import java.util.regex.Pattern;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+    UploadTableRepository uploadTableRepository;
     public UserEntity saveUser(UserEntity userEntity){
         return userRepository.save(userEntity);
     }
@@ -31,6 +35,9 @@ public class UserService {
     public void createUserDirectory(Long userId){
         File directory = new File("/media/chill/D/game-masters/users/"+userId);
         directory.mkdirs();
+    }
+    public List<UserTableEntity> getAllUsers(){
+        return uploadTableRepository.findAll();
     }
 
     public boolean validateEmail(String email) {

@@ -1,8 +1,8 @@
 /App/src/main/java/com/example/uploadingfiles/Controllers/FileSendController.java
 /App/src/main/java/com/example/uploadingfiles/Configs/UploadGuard.java
 /App/src/main/java/com/example/uploadingfiles/Configs/AsyncConfig.java
-/App/src/main/java/com/example/uploadingfiles/Core/storage/AsyncUploadNotifier.java
 /App/src/main/java/com/example/uploadingfiles/Controllers/FileUploadController.java
+/App/src/main/java/com/example/uploadingfiles/Core/storage/AsyncUploadNotifier.java
 /App/src/main/java/com/example/uploadingfiles/UploadingFilesApplication.java
 /App/src/main/java/com/example/uploadingfiles/Core/storage/StorageService.java
 /App/src/main/java/com/example/uploadingfiles/Core/storage/StorageException.java

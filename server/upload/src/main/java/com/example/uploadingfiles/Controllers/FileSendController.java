@@ -35,19 +35,12 @@ public class FileSendController {
         this.storageService = storageService;
         this.storageProperties = storageProperties;
     }
-    @GetMapping("/video")
-    @ResponseBody
-    public ResponseEntity<Resource> getVideo() throws IOException {
-        Resource file = storageService.loadAsResource("A.webm", "can");
-        if(file==null)
-            return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(new ByteArrayResource(file.getContentAsByteArray()));
-    }
-    @GetMapping("/getFile/{fileName}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String fileName) {
 
-        Resource file = storageService.loadAsResource(fileName, "can");
+    @GetMapping("/getFile/{userName}/{fileName}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String userName,@PathVariable String fileName) {
+
+        Resource file = storageService.loadAsResource(fileName, userName);
 
         if (file == null)
             return ResponseEntity.notFound().build();
