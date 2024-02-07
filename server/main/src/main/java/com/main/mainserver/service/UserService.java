@@ -1,7 +1,7 @@
 package com.main.mainserver.service;
 
 import com.main.mainserver.entity.UserEntity;
-import com.main.mainserver.entity.UserTableEntity;
+import com.main.mainserver.entity.VideosEntity;
 import com.main.mainserver.repository.UploadTableRepository;
 import com.main.mainserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class UserService {
         File directory = new File("/media/chill/D/game-masters/users/"+userId);
         directory.mkdirs();
     }
-    public List<UserTableEntity> getAllUsers(){
+    public List<VideosEntity> getAllUsers(){
         return uploadTableRepository.findAll();
     }
 
