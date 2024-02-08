@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 
 export default function Thumbnail(props) {
-  const [click, setClick] = useState(false);
-  const OnClick = () => {
-    setClick((current) => !current);
-  };
+  const [overlay, setOverlay] = useState(false);
   const OnEnterLeave = () => {
-    setClick((current) => !current);
+    setOverlay((current) => !current);
   };
   const Idle = () => {
     return (
@@ -22,7 +19,7 @@ export default function Thumbnail(props) {
   const Active = () => {
     return (
       <div className="w-64 h-44 flex justify-center align-middle items-center z-0">
-        {click ? (
+        {overlay ? (
           <div
             className="absolute w-64 h-44 z-10 bg-black opacity-80"
             onMouseLeave={OnEnterLeave}
@@ -32,10 +29,10 @@ export default function Thumbnail(props) {
         ) : (
           <></>
         )}
-        <img src={props.data} onClick={OnClick} className="w-64 h-44" />
+        <img src={props.data} className="w-64 h-44" />
       </div>
     );
   };
 
-  return click ? <Active /> : <Idle />;
+  return overlay ? <Active /> : <Idle />;
 }
