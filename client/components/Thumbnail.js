@@ -6,28 +6,31 @@ export default function Thumbnail(props) {
     setClick((current) => !current);
   };
   const OnEnter = () => {
-    console.log("enter");
+    setClick((current) => !current);
   };
   const OnLeave = () => {
-    console.log("stop");
+    setClick((current) => !current);
   };
   const Idle = () => {
     return (
       <div className="w-64 h-44 flex justify-center align-middle items-center">
-        <img
-          src={props.data}
-          onClick={OnClick}
-          onMouseEnter={OnEnter}
-          onMouseLeave={OnLeave}
-          className="w-64 h-44"
-        />
+        <img src={props.data} onMouseEnter={OnEnter} className="w-64 h-44" />
       </div>
     );
   };
   const Active = () => {
     return (
       <div className="w-64 h-44 flex justify-center align-middle items-center z-0">
-        <div className="absolute w-64 h-44 z-10 bg-black opacity-80">hi</div>
+        {click ? (
+          <div
+            className="absolute w-64 h-44 z-10 bg-black opacity-80"
+            onMouseLeave={OnLeave}
+          >
+            hi
+          </div>
+        ) : (
+          <></>
+        )}
         <img src={props.data} onClick={OnClick} className="w-64 h-44" />
       </div>
     );
