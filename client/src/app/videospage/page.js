@@ -77,7 +77,11 @@ export default function page() {
   return (
     <>
       {imageData.map((image) => (
-        <Thumbnail data={image.data} userName={image.userName} />
+        <Thumbnail
+          data={image.data}
+          userName={image.userName}
+          videoName={image.fileName}
+        />
       ))}
     </>
   );
