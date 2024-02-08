@@ -19,16 +19,16 @@ export default function Thumbnail(props) {
           onClick={OnClick}
           onMouseEnter={OnEnter}
           onMouseLeave={OnLeave}
-          className="w-60 h-40"
+          className="w-64 h-44"
         />
       </div>
     );
   };
   const Active = () => {
     return (
-      <div className="w-64 h-44 flex justify-center align-middle items-center">
-        hi
-        <img src={props.data} width="300" height="300" onClick={OnClick} />
+      <div className="w-64 h-44 flex justify-center align-middle items-center z-0">
+        <div className="absolute w-64 h-44 z-10 bg-gray-800 opacity-50">hi</div>
+        <img src={props.data} onClick={OnClick} className="w-64 h-44" />
       </div>
     );
   };
