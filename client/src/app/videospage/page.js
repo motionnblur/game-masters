@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Thumbnail from "../../../components/Thumbnail";
 
 const url = "http://localhost:8080/api/authenticate";
 
@@ -75,7 +76,7 @@ export default function page() {
   return (
     <>
       {imageData.map((image) => (
-        <img src={image.data} width="300" height="300" />
+        <Thumbnail data={image.data} />
       ))}
     </>
   );
