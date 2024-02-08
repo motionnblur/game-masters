@@ -27,7 +27,7 @@ export default function Thumbnail(props) {
             className="absolute w-64 h-44 z-10 bg-black opacity-80"
             onMouseLeave={OnEnterLeave}
           >
-            hi
+            Teacher: {}
           </div>
         ) : (
           <></>
