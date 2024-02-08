@@ -65,6 +65,7 @@ export default function page() {
         const base64Data = "data:image/png;base64," + response.data;
         newImageData.push({
           fileName: thumb.thumbnailName,
+          userName: thumb.userName,
           data: base64Data,
         });
       }
@@ -76,7 +77,7 @@ export default function page() {
   return (
     <>
       {imageData.map((image) => (
-        <Thumbnail data={image.data} />
+        <Thumbnail data={image.data} userName={image.userName} />
       ))}
     </>
   );

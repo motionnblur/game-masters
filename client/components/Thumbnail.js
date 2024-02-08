@@ -17,6 +17,7 @@ export default function Thumbnail(props) {
       </div>
     );
   };
+
   const Active = () => {
     return (
       <div className="w-64 h-44 flex justify-center align-middle items-center z-0 m-2">
@@ -25,7 +26,7 @@ export default function Thumbnail(props) {
             className="absolute w-64 h-44 z-10 bg-black opacity-80 flex flex-col justify-center align-middle items-center"
             onMouseLeave={OnEnterLeave}
           >
-            <div> Teacher: {} </div>
+            <div> Teacher: {props.userName} </div>
             <button onClick={OnVideoPlay}>Play</button>
           </div>
         ) : (
