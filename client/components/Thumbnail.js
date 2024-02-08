@@ -3,10 +3,13 @@ import Player from "./Player";
 
 export default function Thumbnail(props) {
   const [overlay, setOverlay] = useState(false);
+  const [onPlay, setOnPlay] = useState(false);
   const OnEnterLeave = () => {
     setOverlay((current) => !current);
   };
-  const OnVideoPlay = () => {};
+  const OnVideoPlay = () => {
+    setOnPlay((current) => !current);
+  };
   const Idle = () => {
     return (
       <div className="w-64 h-44 flex justify-center align-middle items-center m-2">
@@ -36,9 +39,13 @@ export default function Thumbnail(props) {
           )}
           <img src={props.data} className="w-64 h-44" />
         </div>
-        <Player
-          src={`http://localhost:8081/getFile/${props.userName}/${props.videoName}`}
-        />
+        {onPlay ? (
+          <Player
+            src={`http://localhost:8081/getFile/${props.userName}/${props.videoName}`}
+          />
+        ) : (
+          <></>
+        )}
       </>
     );
   };
