@@ -21,10 +21,11 @@ export default function Thumbnail(props) {
       <div className="w-64 h-44 flex justify-center align-middle items-center z-0 m-2">
         {overlay ? (
           <div
-            className="absolute w-64 h-44 z-10 bg-black opacity-80"
+            className="absolute w-64 h-44 z-10 bg-black opacity-80 flex flex-col justify-center align-middle items-center"
             onMouseLeave={OnEnterLeave}
           >
-            Teacher: {}
+            <div> Teacher: {} </div>
+            <button>Play</button>
           </div>
         ) : (
           <></>
