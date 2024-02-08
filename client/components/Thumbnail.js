@@ -12,7 +12,5 @@ export default function Thumbnail(props) {
     return <img src={props.data} width="500" height="500" onClick={OnClick} />;
   };
 
-  {
-  }
   return click ? <Active /> : <Idle />;
 }
