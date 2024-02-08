@@ -1,17 +1,25 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getCookie } from "cookies-next";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Thumbnail from "../../../components/Thumbnail";
+import Player from "../../../components/Player";
 
 const url = "http://localhost:8080/api/authenticate";
 
 export default function page() {
   const router = useRouter();
+
   const [thumbnailData, setThumbnailData] = useState([]);
   const [imageData, setImageData] = useState([]);
+  const [showVideo, setShowVideo] = useState(false);
+
+  const userNameForVideo = useRef("");
+  const videNameForVideo = useRef("");
+  console.log(userNameForVideo);
+
   useEffect(() => {
     axios
       .post(
@@ -81,8 +89,18 @@ export default function page() {
           data={image.data}
           userName={image.userName}
           videoName={image.fileName}
+          setShowVideo={setShowVideo}
+          userNameForVideo={userNameForVideo}
+          videNameForVideo={videNameForVideo}
         />
       ))}
+      {showVideo ? (
+        <Player
+          src={`http://localhost:8081/getFile/${userNameForVideo.current}/${videNameForVideo.current}`}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 }

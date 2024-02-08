@@ -3,12 +3,13 @@ import Player from "./Player";
 
 export default function Thumbnail(props) {
   const [overlay, setOverlay] = useState(false);
-  const [onPlay, setOnPlay] = useState(false);
   const OnEnterLeave = () => {
     setOverlay((current) => !current);
   };
   const OnVideoPlay = () => {
-    setOnPlay((current) => !current);
+    props.userNameForVideo.current = props.userName;
+    props.videNameForVideo.current = props.videoName;
+    props.setShowVideo(true);
   };
   const Idle = () => {
     return (
@@ -39,15 +40,6 @@ export default function Thumbnail(props) {
           )}
           <img src={props.data} className="w-64 h-44" />
         </div>
-        {onPlay ? (
-          <div className="absolute w-80 h-80">
-            <Player
-              src={`http://localhost:8081/getFile/${props.userName}/${props.videoName}`}
-            />
-          </div>
-        ) : (
-          <></>
-        )}
       </>
     );
   };
