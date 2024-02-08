@@ -5,16 +5,17 @@ export default function Thumbnail(props) {
   const OnClick = () => {
     setClick((current) => !current);
   };
-  const OnEnter = () => {
-    setClick((current) => !current);
-  };
-  const OnLeave = () => {
+  const OnEnterLeave = () => {
     setClick((current) => !current);
   };
   const Idle = () => {
     return (
       <div className="w-64 h-44 flex justify-center align-middle items-center">
-        <img src={props.data} onMouseEnter={OnEnter} className="w-64 h-44" />
+        <img
+          src={props.data}
+          onMouseEnter={OnEnterLeave}
+          className="w-64 h-44"
+        />
       </div>
     );
   };
@@ -24,7 +25,7 @@ export default function Thumbnail(props) {
         {click ? (
           <div
             className="absolute w-64 h-44 z-10 bg-black opacity-80"
-            onMouseLeave={OnLeave}
+            onMouseLeave={OnEnterLeave}
           >
             hi
           </div>
