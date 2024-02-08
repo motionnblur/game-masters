@@ -7,7 +7,7 @@ export default function Thumbnail(props) {
   };
   const Idle = () => {
     return (
-      <div className="w-64 h-44 flex justify-center align-middle items-center">
+      <div className="w-64 h-44 flex justify-center align-middle items-center m-2">
         <img
           src={props.data}
           onMouseEnter={OnEnterLeave}
@@ -18,7 +18,7 @@ export default function Thumbnail(props) {
   };
   const Active = () => {
     return (
-      <div className="w-64 h-44 flex justify-center align-middle items-center z-0">
+      <div className="w-64 h-44 flex justify-center align-middle items-center z-0 m-2">
         {overlay ? (
           <div
             className="absolute w-64 h-44 z-10 bg-black opacity-80"
