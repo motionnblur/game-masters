@@ -5,6 +5,7 @@ export default function Thumbnail(props) {
   const OnEnterLeave = () => {
     setOverlay((current) => !current);
   };
+  const OnVideoPlay = () => {};
   const Idle = () => {
     return (
       <div className="w-64 h-44 flex justify-center align-middle items-center m-2">
@@ -25,7 +26,7 @@ export default function Thumbnail(props) {
             onMouseLeave={OnEnterLeave}
           >
             <div> Teacher: {} </div>
-            <button>Play</button>
+            <button onClick={OnVideoPlay}>Play</button>
           </div>
         ) : (
           <></>
