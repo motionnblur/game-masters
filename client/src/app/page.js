@@ -24,7 +24,11 @@ export default function page() {
     );
   };
   const AfterLogin = () => {
-    return <>hi</>;
+    return (
+      <>
+        <b>Hi</b>
+      </>
+    );
   };
 
   if (userLoginState == null) return;
