@@ -3,13 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { setusernamestate } from "../states/userNameStateSlice";
+import { setuserloginstate } from "../states/userLoginStateSlice";
 
 const authUrl = "http://localhost:8080/api/authenticate";
 export default function Logic() {
-  const currentUserLoginState = useSelector(
-    (state) => state.userloginstate.value
-  );
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,6 +26,9 @@ export default function Logic() {
       .then((res) => {
         if (res.data) {
           dispatch(setusernamestate(res.data));
+          dispatch(setuserloginstate(true));
+        } else {
+          dispatch(setuserloginstate(false));
         }
       });
   }, []);
