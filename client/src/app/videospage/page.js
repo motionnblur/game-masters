@@ -83,9 +83,11 @@ export default function page() {
           className="absolute top-0 w-full h-full z-10 flex justify-center align-middle items-center bg-black"
           onClick={() => setShowVideo(false)}
         >
-          <Player
-            src={`http://localhost:8081/getFile/${userNameForVideo.current}/${videNameForVideo.current}`}
-          />
+          <div onClick={(e) => e.stopPropagation()}>
+            <Player
+              src={`http://localhost:8081/getFile/${userNameForVideo.current}/${videNameForVideo.current}`}
+            />
+          </div>
         </div>
       ) : (
         <></>
