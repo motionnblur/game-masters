@@ -1,15 +1,22 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { getCookie } from "cookies-next";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Thumbnail from "../../../components/Thumbnail";
 import Player from "../../../components/Player";
-
-const url = "http://localhost:8080/api/authenticate";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function page() {
+  const currentUserLoginState = useSelector(
+    (state) => state.userloginstate.value
+  );
+
+  if (currentUserLoginState == null) {
+    alert("you're not allowed to see the page");
+    return;
+  }
+
   const router = useRouter();
 
   const [thumbnailData, setThumbnailData] = useState([]);
@@ -20,29 +27,6 @@ export default function page() {
   const videNameForVideo = useRef("");
   console.log(userNameForVideo);
 
-  useEffect(() => {
-    axios
-      .post(
-        url,
-        {
-          cookieData: getCookie("user-id"),
-        },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data) {
-          //setUserName(res.data);
-        } else {
-          alert("You are not allowed to see this page");
-          router.push("/");
-        }
-      });
-  }, []);
   ////////////////////////////////////////////////////////////////////////
   useEffect(() => {
     const fetchAllThumbnailData = async () => {
