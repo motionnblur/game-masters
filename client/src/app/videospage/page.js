@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Thumbnail from "../../../components/Thumbnail";
 import Player from "../../../components/Player";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function page() {
   const currentUserLoginState = useSelector(
@@ -15,7 +15,7 @@ export default function page() {
   const router = useRouter();
 
   if (currentUserLoginState == null || currentUserLoginState == false) {
-    alert("you're not allowed to see the page");
+    //alert("you're not allowed to see the page");
     router.push("/");
   }
 
@@ -25,7 +25,7 @@ export default function page() {
 
   const userNameForVideo = useRef("");
   const videNameForVideo = useRef("");
-  console.log(userNameForVideo);
+  //console.log(userNameForVideo);
 
   ////////////////////////////////////////////////////////////////////////
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function page() {
 
       const newImageData = [];
       for (const thumb of thumbnailData) {
-        console.log(thumb.userName, thumb.thumbnailName);
+        //console.log(thumb.userName, thumb.thumbnailName);
         const response = await axios.get("http://localhost:8081/getVideoImg", {
           params: {
             fileName: thumb.thumbnailName,
