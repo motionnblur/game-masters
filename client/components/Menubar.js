@@ -1,15 +1,8 @@
-import React, { useEffect } from "react";
 import MenuItem from "./MenuItem";
 import { Video, Home, Settings, Upload } from "react-feather";
-import { useSelector, useDispatch } from "react-redux";
-import { getCookie } from "cookies-next";
-import axios from "axios";
-import { setuserloginstate } from "../states/userLoginStateSlice";
+import { useSelector } from "react-redux";
 
-const authUrl = "http://localhost:8080/api/authenticate";
 export default function Menubar() {
-  const dispatch = useDispatch();
-
   const currentUserLoginState = useSelector(
     (state) => state.userloginstate.value
   );
@@ -37,29 +30,6 @@ export default function Menubar() {
       </div>
     );
   };
-
-  useEffect(() => {
-    axios
-      .post(
-        authUrl,
-        {
-          cookieData: getCookie("user-id"),
-        },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data) {
-          dispatch(setuserloginstate(true));
-        } else {
-          dispatch(setuserloginstate(false));
-        }
-      });
-  }, []);
 
   if (currentUserLoginState) {
     return <AfterLogin />;
