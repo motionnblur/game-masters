@@ -7,17 +7,31 @@ import BgFiller from "../../components/LoginNew/Childrens/BgFiller";
 
 export default function page() {
   const currentstate = useSelector((state) => state.loginstate.value);
+  const userLoginState = useSelector((state) => state.userloginstate.value);
 
-  return (
-    <>
-      {currentstate && <BgFiller />}
-      <div className="w-full h-full flex flex-col items-center justify-center sm:gap-3 bg-slate-200">
-        <div className="w-[70vh] h-[40vh] flex gap-4 justify-center items-center">
-          <Card text={<b>Lol</b>} id={0} />
-          <Card text={<b>Dota</b>} id={1} />
+  const BeforeLogin = () => {
+    return (
+      <>
+        {currentstate && <BgFiller />}
+        <div className="w-full h-full flex flex-col items-center justify-center sm:gap-3 bg-slate-200">
+          <div className="w-[70vh] h-[40vh] flex gap-4 justify-center items-center">
+            <Card text={<b>Lol</b>} id={0} />
+            <Card text={<b>Dota</b>} id={1} />
+          </div>
+          {currentstate && <LoginNew />}
         </div>
-        {currentstate && <LoginNew />}
-      </div>
-    </>
-  );
+      </>
+    );
+  };
+  const AfterLogin = () => {
+    return <>hi</>;
+  };
+
+  if (userLoginState == null) return;
+
+  if (userLoginState) {
+    return <AfterLogin />;
+  } else {
+    return <BeforeLogin />;
+  }
 }
