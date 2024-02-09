@@ -13,8 +13,8 @@ export default function page() {
       {currentstate && <BgFiller />}
       <div className="w-full h-full flex flex-col items-center justify-center sm:gap-3 bg-slate-200">
         <div className="w-[70vh] h-[40vh] flex gap-4 justify-center items-center">
-          <Card text={<b>lol</b>} id={0} />
-          <Card text={<b>dota</b>} id={1} />
+          <Card text={<b>Lol</b>} id={0} />
+          <Card text={<b>Dota</b>} id={1} />
         </div>
         {currentstate && <LoginNew />}
       </div>
