@@ -12,12 +12,12 @@ export default function page() {
     (state) => state.userloginstate.value
   );
 
-  if (currentUserLoginState == null) {
-    alert("you're not allowed to see the page");
-    return;
-  }
-
   const router = useRouter();
+
+  if (currentUserLoginState == null || currentUserLoginState == false) {
+    alert("you're not allowed to see the page");
+    router.push("/");
+  }
 
   const [thumbnailData, setThumbnailData] = useState([]);
   const [imageData, setImageData] = useState([]);
