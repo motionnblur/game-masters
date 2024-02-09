@@ -6,8 +6,12 @@ import { validateEmail } from "../../../api/Regex";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setuserloginstate } from "../../../states/userLoginStateSlice";
 
 export default function LoginNew() {
+  const dispatch = useDispatch();
+
   const router = useRouter();
   const [signupState, setSignupState] = useState(false);
   const [activeIndis, setActiveIndis] = useState(0);
@@ -61,6 +65,7 @@ export default function LoginNew() {
 
         if (response.data !== "successful") return;
 
+        dispatch(setuserloginstate(true));
         router.push("/userpage");
       });
   };

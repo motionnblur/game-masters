@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 
 export default function MenuItem(props) {
   const router = useRouter();
-  const currentstate = useSelector((state) => state.menustate.value);
   const dispatch = useDispatch();
+
+  const currentstate = useSelector((state) => state.menustate.value);
+
   const de_activecolor = "bg-slate-100";
   const active_color = "bg-lime-400";
   var current_color = de_activecolor;
