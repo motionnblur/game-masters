@@ -10,11 +10,11 @@ export default function Card(props) {
   };
   return (
     <div
-      className=" w-48 h-64 bg-slate-700 rounded-md shadow-black shadow-sm cursor-pointer hover:scale-105 transition duration-2000 ease-in-out
+      className=" w-48 h-64 bg-black rounded-md shadow-black shadow-sm cursor-pointer hover:scale-105 transition duration-2000 ease-in-out
        flex justify-center items-center"
       onClick={onCLickFunc}
     >
-      {props.text}
+      <img src={props.img} className={`w-${props.width} h-${props.height}`} />
     </div>
   );
 }
