@@ -13,7 +13,7 @@ export default function page() {
     return (
       <>
         {currentstate && <BgFiller />}
-        <div className="w-full h-full flex flex-col items-center justify-center sm:gap-3 bg-slate-200">
+        <div className="w-full h-full flex flex-col items-center justify-center sm:gap-3 bg-gray-800">
           <div className="w-[70vh] h-[40vh] flex gap-4 justify-center items-center">
             <Card
               text={<b>Lol</b>}
