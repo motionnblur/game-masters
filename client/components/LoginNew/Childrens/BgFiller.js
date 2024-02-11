@@ -6,7 +6,7 @@ export default function BgFiller() {
   const dispatch = useDispatch();
   return (
     <div
-      className="absolute w-full h-full bg-black opacity-60"
+      className="absolute w-full h-full bg-black opacity-60 z-20"
       onClick={() => {
         dispatch(setloginstate(false));
       }}
