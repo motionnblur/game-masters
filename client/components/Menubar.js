@@ -7,6 +7,8 @@ export default function Menubar() {
     (state) => state.userloginstate.value
   );
 
+  if (!currentUserLoginState) return;
+
   const AfterLogin = () => {
     return (
       <div className="hidden absolute w-16 h-full md:flex justify-center items-center z-50">
