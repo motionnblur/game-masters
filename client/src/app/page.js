@@ -13,8 +13,9 @@ export default function page() {
       <>
         <video
           controls={false}
-          autoPlay
+          autoPlay={true}
           loop={true}
+          muted
           src="warriors.mp4"
           style={{
             zIndex: "0",
