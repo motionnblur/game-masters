@@ -3,7 +3,6 @@ import LoginSignButtons from "../Childrens/LoginSignButtons";
 import LoginBody from "../Childrens/LoginBody";
 import SignupBody from "../Childrens/SignupBody";
 import { validateEmail } from "../../../api/Regex";
-import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useDispatch } from "react-redux";
