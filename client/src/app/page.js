@@ -4,9 +4,11 @@ import Card from "../../components/Card";
 import { useSelector } from "react-redux";
 import LoginNew from "../../components/LoginNew/Parent/LoginNew";
 import BgFiller from "../../components/LoginNew/Childrens/BgFiller";
+import { useRouter } from "next/navigation";
 
 export default function page() {
   const userLoginState = useSelector((state) => state.userloginstate.value);
+  const router = useRouter();
 
   const VideoLayer = () => {
     return (
@@ -53,11 +55,7 @@ export default function page() {
     );
   };
   const AfterLogin = () => {
-    return (
-      <>
-        <b>Hi</b>
-      </>
-    );
+    router.push("/videospage");
   };
 
   if (userLoginState == null) return;
