@@ -32,8 +32,10 @@ export default function Thumbnail(props) {
               className="absolute w-64 h-44 z-10 bg-black opacity-80 flex flex-col justify-center align-middle items-center"
               onMouseLeave={OnEnterLeave}
             >
-              <div> Teacher: {props.userName} </div>
-              <button onClick={OnVideoPlay}>Play</button>
+              <div className="text-white"> Teacher: {props.userName} </div>
+              <button onClick={OnVideoPlay}>
+                <div className="text-white">Play</div>
+              </button>
             </div>
           ) : (
             <></>
