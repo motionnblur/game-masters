@@ -59,7 +59,7 @@ export default function LoginNew() {
         },
       )
       .then((response) => {
-        const cookie = getCookie("user-id");
+        //const cookie = getCookie("user-id");
         //console.log(cookie);
         //console.log(response);
 
