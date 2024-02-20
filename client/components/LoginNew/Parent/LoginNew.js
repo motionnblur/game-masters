@@ -56,7 +56,7 @@ export default function LoginNew() {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       )
       .then((response) => {
         const cookie = getCookie("user-id");
@@ -96,7 +96,7 @@ export default function LoginNew() {
 
   return (
     <div
-      className="absolute w-[330px] h-[480px] z-30 bg-cyan-500 rounded-md shadow-slate-500
+      className="absolute w-[330px] h-[480px] z-30 bg-[#262626] rounded-md
            shadow-md flex flex-col p-5 gap-3"
     >
       <div className="w-full h-full flex flex-col items-center gap-4">
