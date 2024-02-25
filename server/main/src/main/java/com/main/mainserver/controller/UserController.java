@@ -1,7 +1,7 @@
 package com.main.mainserver.controller;
 
-import com.main.mainserver.dao.AuthenticateDao;
-import com.main.mainserver.dao.LoginDao;
+import com.main.mainserver.dto.AuthenticateDto;
+import com.main.mainserver.dto.LoginDto;
 import com.main.mainserver.entity.SessionEntity;
 import com.main.mainserver.entity.UserEntity;
 import com.main.mainserver.repository.SessionRepository;
@@ -9,6 +9,7 @@ import com.main.mainserver.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,20 +57,20 @@ public class UserController {
     }
 
     @PostMapping("/api/login_user")
-    private String loginUser(@RequestBody LoginDao loginDao, HttpServletResponse response) {
+    private ResponseEntity<String> loginUser(@RequestBody LoginDto loginDao, HttpServletResponse response) {
         if (loginDao.getPassw() == null || loginDao.getMail() == null)
-            return "null";
+            return new ResponseEntity<>("password and mail can not be null", HttpStatus.NOT_ACCEPTABLE);
         if (!userService.validateEmail(loginDao.getMail()))
-            return "please write a correct mail";
+            return new ResponseEntity<>("email is not correct", HttpStatus.NOT_ACCEPTABLE);
 
         String userMail = loginDao.getMail();
         String userPassw = loginDao.getPassw();
 
         UserEntity user = userService.findByUserMail(userMail);
 
-        if (user == null) return "user could not be found";
+        if (user == null) return new ResponseEntity<>("user could not found", HttpStatus.NOT_FOUND);
         if (!passwordEncoder.matches(userPassw, user.getPassw()))
-            return "password is wrong";
+            return new ResponseEntity<>("password doesn't match", HttpStatus.NOT_ACCEPTABLE);
 
         String userId = UUID.randomUUID().toString();
 
@@ -90,16 +91,16 @@ public class UserController {
 
         sessionRepository.save(sEntity);
 
-        return "successful";
+        return new ResponseEntity<>("login is successful", HttpStatus.OK);
     }
 
     @PostMapping("/api/authenticate")
-    private String authenticateUser(@RequestBody AuthenticateDao autDao) {
-        if(autDao.getCookieData() == null) return "null";
-        if(!sessionRepository.existsById(autDao.getCookieData())) return "null";
+    private ResponseEntity<String> authenticateUser(@RequestBody AuthenticateDto autDao) {
+        if(autDao.getCookieData() == null) return new ResponseEntity<>("cookie data is null", HttpStatus.NOT_FOUND);
+        if(!sessionRepository.existsById(autDao.getCookieData())) return new ResponseEntity<>("authentication failed", HttpStatus.NOT_FOUND);
         String userName = sessionRepository.findById(autDao.getCookieData()).get().getName();
 
-        if(userName == null) return "null";
-        return userName;
+        if(userName == null) return new ResponseEntity<>("authentication failed", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(userName, HttpStatus.OK);
     }
 }

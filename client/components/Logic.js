@@ -24,10 +24,11 @@ export default function Logic() {
         }
       )
       .then((res) => {
-        if (res.data) {
-          dispatch(setusernamestate(res.data));
-          dispatch(setuserloginstate(true));
-        } else {
+        dispatch(setusernamestate(res.data));
+        dispatch(setuserloginstate(true));
+      })
+      .catch((e) => {
+        if (e.request.status === 404) {
           dispatch(setuserloginstate(false));
         }
       });

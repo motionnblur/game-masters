@@ -1,10 +1,10 @@
-package com.main.mainserver.dao;
+package com.main.mainserver.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AuthenticateDao {
+public class AuthenticateDto {
     private String cookieData;
 }

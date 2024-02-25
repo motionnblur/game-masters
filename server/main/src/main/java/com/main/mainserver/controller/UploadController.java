@@ -1,6 +1,6 @@
 package com.main.mainserver.controller;
 
-import com.main.mainserver.dao.UploadStatus;
+import com.main.mainserver.dto.UploadStatusDto;
 import com.main.mainserver.entity.ThumbnailsEntity;
 import com.main.mainserver.entity.UserEntity;
 import com.main.mainserver.entity.VideosEntity;
@@ -28,7 +28,7 @@ public class UploadController {
     }
 
     @PostMapping("/api/updateUploadTable")
-    private String upload(@RequestBody UploadStatus uploadStatus){
+    private String upload(@RequestBody UploadStatusDto uploadStatus){
         VideosEntity temp = videosRepository.findByFileName(uploadStatus.getFileName());
         if(temp != null)
             return "same data exist";

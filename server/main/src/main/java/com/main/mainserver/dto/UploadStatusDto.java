@@ -1,12 +1,11 @@
-package com.main.mainserver.dao;
+package com.main.mainserver.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.core.io.Resource;
 
 @Getter
 @Setter
-public class UploadStatus {
+public class UploadStatusDto {
     String fileName;
     String filePath;
     String userName;
