@@ -95,12 +95,12 @@ public class UserController {
     }
 
     @PostMapping("/api/authenticate")
-    private String authenticateUser(@RequestBody AuthenticateDao autDao) {
-        if(autDao.getCookieData() == null) return "null";
-        if(!sessionRepository.existsById(autDao.getCookieData())) return "null";
+    private ResponseEntity<String> authenticateUser(@RequestBody AuthenticateDao autDao) {
+        if(autDao.getCookieData() == null) return new ResponseEntity<>("cookie data is null", HttpStatus.NOT_FOUND);
+        if(!sessionRepository.existsById(autDao.getCookieData())) return new ResponseEntity<>("authentication failed", HttpStatus.NOT_FOUND);
         String userName = sessionRepository.findById(autDao.getCookieData()).get().getName();
 
-        if(userName == null) return "null";
-        return userName;
+        if(userName == null) return new ResponseEntity<>("authentication failed", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(userName, HttpStatus.OK);
     }
 }
