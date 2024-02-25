@@ -1,11 +1,11 @@
-package com.main.mainserver.dao;
+package com.main.mainserver.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class VideoDao {
+public class VideoDto {
     String userName;
     String videoName;
     String videoPath;

@@ -1,7 +1,7 @@
 package com.main.mainserver.controller;
 
-import com.main.mainserver.dao.AuthenticateDao;
-import com.main.mainserver.dao.LoginDao;
+import com.main.mainserver.dto.AuthenticateDto;
+import com.main.mainserver.dto.LoginDto;
 import com.main.mainserver.entity.SessionEntity;
 import com.main.mainserver.entity.UserEntity;
 import com.main.mainserver.repository.SessionRepository;
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @PostMapping("/api/login_user")
-    private ResponseEntity<String> loginUser(@RequestBody LoginDao loginDao, HttpServletResponse response) {
+    private ResponseEntity<String> loginUser(@RequestBody LoginDto loginDao, HttpServletResponse response) {
         if (loginDao.getPassw() == null || loginDao.getMail() == null)
             return new ResponseEntity<>("password and mail can not be null", HttpStatus.NOT_ACCEPTABLE);
         if (!userService.validateEmail(loginDao.getMail()))
@@ -95,7 +95,7 @@ public class UserController {
     }
 
     @PostMapping("/api/authenticate")
-    private ResponseEntity<String> authenticateUser(@RequestBody AuthenticateDao autDao) {
+    private ResponseEntity<String> authenticateUser(@RequestBody AuthenticateDto autDao) {
         if(autDao.getCookieData() == null) return new ResponseEntity<>("cookie data is null", HttpStatus.NOT_FOUND);
         if(!sessionRepository.existsById(autDao.getCookieData())) return new ResponseEntity<>("authentication failed", HttpStatus.NOT_FOUND);
         String userName = sessionRepository.findById(autDao.getCookieData()).get().getName();
