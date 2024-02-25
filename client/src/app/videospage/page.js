@@ -13,10 +13,8 @@ export default function page() {
   );
 
   const router = useRouter();
-
-  if (currentUserLoginState == null || currentUserLoginState == false) {
-    //alert("you're not allowed to see the page");
-    router.push("/");
+  if (currentUserLoginState == false) {
+    router.push("/"); // problem here
   }
 
   const [thumbnailData, setThumbnailData] = useState([]);
@@ -25,7 +23,6 @@ export default function page() {
 
   const userNameForVideo = useRef("");
   const videNameForVideo = useRef("");
-  //console.log(userNameForVideo);
 
   ////////////////////////////////////////////////////////////////////////
   useEffect(() => {
