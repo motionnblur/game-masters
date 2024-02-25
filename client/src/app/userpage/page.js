@@ -31,12 +31,11 @@ export default function Page() {
         }
       )
       .then((res) => {
-        if (res.data) {
-          setUserName(res.data);
-        } else {
-          alert("You are not allowed to see this page");
-          router.push("/");
-        }
+        setUserName(res.data);
+      })
+      .catch((e) => {
+        alert("You are not allowed to see this page");
+        router.push("/");
       });
   }, []);
 

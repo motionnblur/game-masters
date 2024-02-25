@@ -55,17 +55,14 @@ export default function LoginNew() {
           headers: {
             "Content-Type": "application/json",
           },
-        },
+        }
       )
-      .then((response) => {
-        //const cookie = getCookie("user-id");
-        //console.log(cookie);
-        //console.log(response);
-
-        if (response.data !== "successful") return;
-
+      .then(() => {
         dispatch(setuserloginstate(true));
         router.push("/userpage");
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
