@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Player from "./Player";
 
 export default function Thumbnail(props) {
   const [overlay, setOverlay] = useState(false);

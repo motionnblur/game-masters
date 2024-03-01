@@ -90,42 +90,39 @@ export default function Page() {
 
   return (
     <>
-      <div className="w-full h-full bg-slate-800 flex overflow-hidden">
-        <div className="flex flex-col align-middle items-center w-full h-full mt-3 mb-3">
-          <b>{userName}</b>
-          <br />
-          <b>## your videos ##</b>
-          <div
-            className="flex flex-col mt-4"
-            style={{ height: "80%", width: "500px", overflowY: "scroll" }}
-          >
-            {videoData.map((video, index) => (
-              <VideoImage
-                key={index}
-                data={video.data}
-                index={index}
-                user_name={userName}
-                //video_name={truncateString(video.fileName, 50)}
-                video_name={video.fileName}
-                setShowVideo={setShowVideo}
-                setVideoName={setVideoName}
-              />
-            ))}
+      <>
+        <br />
+        <b>## your videos ##</b>
+        <div
+          className="flex flex-col mt-4"
+          style={{ height: "80%", width: "500px", overflowY: "scroll" }}
+        >
+          {videoData.map((video, index) => (
+            <VideoImage
+              key={index}
+              data={video.data}
+              index={index}
+              user_name={userName}
+              //video_name={truncateString(video.fileName, 50)}
+              video_name={video.fileName}
+              setShowVideo={setShowVideo}
+              setVideoName={setVideoName}
+            />
+          ))}
+        </div>
+      </>
+      {showVideo && (
+        <div
+          className="absolute z-50 w-full h-full bg-gray-950 flex justify-center items-center bg-opacity-90"
+          onClick={() => setShowVideo(false)}
+        >
+          <div onClick={(event) => event.stopPropagation()}>
+            <Player
+              src={`http://localhost:8081/getFile/${userName}/${videoName}`}
+            />
           </div>
         </div>
-        {showVideo && (
-          <div
-            className="absolute z-50 w-full h-full bg-gray-950 flex justify-center items-center bg-opacity-90"
-            onClick={() => setShowVideo(false)}
-          >
-            <div onClick={(event) => event.stopPropagation()}>
-              <Player
-                src={`http://localhost:8081/getFile/${userName}/${videoName}`}
-              />
-            </div>
-          </div>
-        )}
-      </div>
+      )}
     </>
   );
 }

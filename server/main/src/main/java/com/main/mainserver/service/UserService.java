@@ -1,7 +1,9 @@
 package com.main.mainserver.service;
 
+import com.main.mainserver.entity.SessionEntity;
 import com.main.mainserver.entity.UserEntity;
 import com.main.mainserver.entity.VideosEntity;
+import com.main.mainserver.repository.SessionRepository;
 import com.main.mainserver.repository.VideosRepository;
 import com.main.mainserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import java.util.regex.Pattern;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    SessionRepository sessionRepository;
     VideosRepository videosRepository;
     public UserEntity saveUser(UserEntity userEntity){
         return userRepository.save(userEntity);
@@ -44,5 +48,14 @@ public class UserService {
         Pattern pattern = Pattern.compile("^[\\w.]+@gmail\\.com$");
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+    public void saveUserSession(SessionEntity sessionEntity){
+        sessionRepository.save(sessionEntity);
+    }
+    public boolean isUserSessionExists(String sessionId){
+        return sessionRepository.existsById(sessionId);
+    }
+    public String findUserNameByCookieData(String sessionId){
+        return sessionRepository.findById(sessionId).get().getName();
     }
 }

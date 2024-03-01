@@ -26,7 +26,6 @@ public class UploadController {
         UserEntity user = userService.findUser(userName);
         return videosRepository.findByUserEntity(user);
     }
-
     @PostMapping("/api/updateUploadTable")
     private String upload(@RequestBody UploadStatusDto uploadStatus){
         VideosEntity temp = videosRepository.findByFileName(uploadStatus.getFileName());
@@ -51,7 +50,6 @@ public class UploadController {
 
         return "uploaded";
     }
-
     @GetMapping("/api/getAllVideos")
     private List<VideosEntity> getAllVideos(){
         List<VideosEntity> userEntityList;

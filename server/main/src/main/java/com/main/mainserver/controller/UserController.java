@@ -4,7 +4,7 @@ import com.main.mainserver.dto.AuthenticateDto;
 import com.main.mainserver.dto.LoginDto;
 import com.main.mainserver.entity.SessionEntity;
 import com.main.mainserver.entity.UserEntity;
-import com.main.mainserver.repository.SessionRepository;
+import com.main.mainserver.helper.HttpHelper;
 import com.main.mainserver.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
-
-import java.time.Duration;
+import com.main.mainserver.helper.UserHelper;
 
 @CrossOrigin(value = "http://localhost:3000", allowCredentials = "true")
 @RestController
@@ -25,82 +22,55 @@ public class UserController {
     @Autowired
     UserService userService;
     @Autowired
-    SessionRepository sessionRepository;
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/api/create_user")
     private ResponseEntity<String> createUser(@RequestBody UserEntity userEntity) {
-        if (userEntity.getUserName() == null || userEntity.getPassw() == null || userEntity.getMail() == null || userEntity.getLastName() == null)
-            return ResponseEntity.badRequest().body("please fill all the fields");
-        if (!userService.validateEmail(userEntity.getMail()))
-            return ResponseEntity.badRequest().body("please write a valid mail");
         try {
-            if (userService.findByUserMail(userEntity.getMail()) != null)
-                return ResponseEntity.badRequest().body("user with that mail already exists");
+            UserHelper.validateUserEntityDtoIfAnyEmptyField(userEntity, userService);
+            UserHelper.checkIfUserExistsInDb(userEntity, userService);
 
-            String hashedPassword = passwordEncoder.encode(userEntity.getPassw());
+            UserEntity newUserTemplate = UserHelper.createNewUserTemplate(userEntity);
+            String hashedUserPassword = UserHelper.hashUserPassword(userEntity.getPassw(), passwordEncoder);
+            newUserTemplate.setPassw(hashedUserPassword);
 
-            UserEntity newUser = new UserEntity();
-            newUser.setUserName(userEntity.getUserName());
-            newUser.setLastName(userEntity.getLastName());
-            newUser.setMail(userEntity.getMail());
-            newUser.setPassw(hashedPassword);
-
-            UserEntity savedUser = userService.saveUser(newUser);
-            userService.createUserDirectory(savedUser.getId());
-
-            return ResponseEntity.ok().build();
+            UserHelper.saveUserToDb(userEntity, userService);
+            return new ResponseEntity<>("User has been created", HttpStatus.CREATED);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.toString());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
     @PostMapping("/api/login_user")
     private ResponseEntity<String> loginUser(@RequestBody LoginDto loginDao, HttpServletResponse response) {
-        if (loginDao.getPassw() == null || loginDao.getMail() == null)
-            return new ResponseEntity<>("password and mail can not be null", HttpStatus.NOT_ACCEPTABLE);
-        if (!userService.validateEmail(loginDao.getMail()))
-            return new ResponseEntity<>("email is not correct", HttpStatus.NOT_ACCEPTABLE);
+        try{
+            UserHelper.validateUserLoginDtoIfAnyEmptyField(loginDao, userService);
+            UserHelper.validateUserMailSyntax(loginDao.getMail(), userService);
+            UserEntity userFromDb = UserHelper.getUserFromDbByUserMail(loginDao.getMail(), userService);
+            UserHelper.continueIfUserPasswordInDbMatchesWithThat(loginDao.getPassw(), userFromDb.getPassw());
 
-        String userMail = loginDao.getMail();
-        String userPassw = loginDao.getPassw();
+            String randomUserId = UserHelper.generateRandomUserId();
+            ResponseCookie cookie = HttpHelper.generateResponseCookieFromUserId(randomUserId);
+            response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        UserEntity user = userService.findByUserMail(userMail);
+            SessionEntity sEntity = UserHelper.generateUserSessionEntity(randomUserId, userFromDb.getUserName());
+            UserHelper.saveUserSession(sEntity, userService);
 
-        if (user == null) return new ResponseEntity<>("user could not found", HttpStatus.NOT_FOUND);
-        if (!passwordEncoder.matches(userPassw, user.getPassw()))
-            return new ResponseEntity<>("password doesn't match", HttpStatus.NOT_ACCEPTABLE);
-
-        String userId = UUID.randomUUID().toString();
-
-        ResponseCookie cookie = ResponseCookie.from("user-id", userId) // key & value
-                .httpOnly(false)
-                .secure(false)
-                .domain("localhost")
-                .path("/")
-                .maxAge(Duration.ofHours(1))
-                .sameSite("Strict")  // sameSite
-                .build()
-                ;
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
-        SessionEntity sEntity = new SessionEntity();
-        sEntity.setId(userId);
-        sEntity.setName(user.getUserName());
-
-        sessionRepository.save(sEntity);
-
-        return new ResponseEntity<>("login is successful", HttpStatus.OK);
+            return new ResponseEntity<>("login is successful", HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
     }
-
     @PostMapping("/api/authenticate")
     private ResponseEntity<String> authenticateUser(@RequestBody AuthenticateDto autDao) {
-        if(autDao.getCookieData() == null) return new ResponseEntity<>("cookie data is null", HttpStatus.NOT_FOUND);
-        if(!sessionRepository.existsById(autDao.getCookieData())) return new ResponseEntity<>("authentication failed", HttpStatus.NOT_FOUND);
-        String userName = sessionRepository.findById(autDao.getCookieData()).get().getName();
+        try{
+            UserHelper.checkIfUserCookieIsNull(autDao.getCookieData());
+            UserHelper.checkIfUserSessionAlreadyExists(autDao.getCookieData(), userService);
 
-        if(userName == null) return new ResponseEntity<>("authentication failed", HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(userName, HttpStatus.OK);
+            String authenticatedUsername = UserHelper.getUsernameByUserCookie(autDao.getCookieData(), userService);
+
+            return new ResponseEntity<>(authenticatedUsername, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 }

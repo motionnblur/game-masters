@@ -28,7 +28,7 @@ export default function Logic() {
         dispatch(setuserloginstate(true));
       })
       .catch((e) => {
-        if (e.request.status === 404) {
+        if (e.response.status === 406) {
           dispatch(setuserloginstate(false));
         }
       });
