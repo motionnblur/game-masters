@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Thumbnail from "../../../components/Thumbnail";
 import Player from "../../../components/Player";
 import { useSelector } from "react-redux";
+import UsernameComp from "../../../components/UsernameComp";
 
 export default function page() {
   const currentUserLoginState = useSelector(
@@ -64,7 +65,8 @@ export default function page() {
   }, [thumbnailData]);
 
   return (
-    <>
+    <div className="m-2 w-full bg-slate-400 flex items-center flex-col">
+      <UsernameComp />
       {imageData.map((image) => (
         <Thumbnail
           data={image.data}
@@ -89,6 +91,6 @@ export default function page() {
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
 }

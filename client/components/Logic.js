@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import { setusernamestate } from "../states/userNameStateSlice";
 import { setuserloginstate } from "../states/userLoginStateSlice";
 
 const authUrl = "http://localhost:8080/api/authenticate";
@@ -23,8 +22,7 @@ export default function Logic() {
           },
         }
       )
-      .then((res) => {
-        dispatch(setusernamestate(res.data));
+      .then(() => {
         dispatch(setuserloginstate(true));
       })
       .catch((e) => {

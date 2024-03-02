@@ -21,12 +21,7 @@ export default function RootLayout({ children }) {
         <Provider store={store}>
           <Logic />
           <Menubar />
-          <div className="w-full h-full bg-slate-800 flex">
-            <div className="m-2 w-full bg-slate-400 flex items-center flex-col">
-              <UsernameComp />
-              {children}
-            </div>
-          </div>
+          <div className="w-full h-full bg-slate-800 flex">{children}</div>
         </Provider>
       </body>
     </html>

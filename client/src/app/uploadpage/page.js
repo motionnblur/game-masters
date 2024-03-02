@@ -4,6 +4,7 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { isVideoFile } from "../../../api/Regex";
+import UsernameComp from "../../../components/UsernameComp";
 
 export default function page() {
   const router = useRouter();
@@ -29,7 +30,6 @@ export default function page() {
         }
       )
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           setUserName(res.data);
         } else {
@@ -95,7 +95,8 @@ export default function page() {
 
   return (
     <>
-      <>
+      <div className="m-2 w-full bg-slate-400 flex items-center flex-col">
+        <UsernameComp />
         <form onSubmit={handleSubmit}>
           <div className="w-full h-full flex flex-col items-center justify-center mt-2 gap-2">
             <input
@@ -113,9 +114,9 @@ export default function page() {
             </button>
           </div>
         </form>
-      </>
 
-      <UploadStatus />
+        <UploadStatus />
+      </div>
     </>
   );
 }

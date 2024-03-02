@@ -5,6 +5,7 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import VideoImage from "../../../components/VideoImage";
 import Player from "../../../components/Player";
+import UsernameComp from "../../../components/UsernameComp";
 
 const url = "http://localhost:8080/api/authenticate";
 
@@ -89,7 +90,8 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div className="m-2 w-full bg-slate-400 flex items-center flex-col">
+      <UsernameComp />
       <>
         <br />
         <b>## your videos ##</b>
@@ -123,6 +125,6 @@ export default function Page() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
