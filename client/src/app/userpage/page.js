@@ -5,6 +5,7 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import VideoImage from "../../../components/VideoImage";
 import Player from "../../../components/Player";
+import UsernameComp from "../../../components/UsernameComp";
 
 const url = "http://localhost:8080/api/authenticate";
 
@@ -31,12 +32,11 @@ export default function Page() {
         }
       )
       .then((res) => {
-        if (res.data) {
-          setUserName(res.data);
-        } else {
-          alert("You are not allowed to see this page");
-          router.push("/");
-        }
+        setUserName(res.data);
+      })
+      .catch((e) => {
+        alert("You are not allowed to see this page");
+        router.push("/");
       });
   }, []);
 
@@ -90,43 +90,41 @@ export default function Page() {
   };
 
   return (
-    <>
-      <div className="w-full h-full bg-slate-800 flex overflow-hidden">
-        <div className="flex flex-col align-middle items-center w-full h-full mt-3 mb-3">
-          <b>{userName}</b>
-          <br />
-          <b>## your videos ##</b>
-          <div
-            className="flex flex-col mt-4"
-            style={{ height: "80%", width: "500px", overflowY: "scroll" }}
-          >
-            {videoData.map((video, index) => (
-              <VideoImage
-                key={index}
-                data={video.data}
-                index={index}
-                user_name={userName}
-                //video_name={truncateString(video.fileName, 50)}
-                video_name={video.fileName}
-                setShowVideo={setShowVideo}
-                setVideoName={setVideoName}
-              />
-            ))}
+    <div className="m-2 w-full bg-slate-400 flex items-center flex-col">
+      <UsernameComp />
+      <>
+        <br />
+        <b>## your videos ##</b>
+        <div
+          className="flex flex-col mt-4"
+          style={{ height: "80%", width: "500px", overflowY: "scroll" }}
+        >
+          {videoData.map((video, index) => (
+            <VideoImage
+              key={index}
+              data={video.data}
+              index={index}
+              user_name={userName}
+              //video_name={truncateString(video.fileName, 50)}
+              video_name={video.fileName}
+              setShowVideo={setShowVideo}
+              setVideoName={setVideoName}
+            />
+          ))}
+        </div>
+      </>
+      {showVideo && (
+        <div
+          className="absolute z-50 w-full h-full bg-gray-950 flex justify-center items-center bg-opacity-90"
+          onClick={() => setShowVideo(false)}
+        >
+          <div onClick={(event) => event.stopPropagation()}>
+            <Player
+              src={`http://localhost:8081/getFile/${userName}/${videoName}`}
+            />
           </div>
         </div>
-        {showVideo && (
-          <div
-            className="absolute z-50 w-full h-full bg-gray-950 flex justify-center items-center bg-opacity-90"
-            onClick={() => setShowVideo(false)}
-          >
-            <div onClick={(event) => event.stopPropagation()}>
-              <Player
-                src={`http://localhost:8081/getFile/${userName}/${videoName}`}
-              />
-            </div>
-          </div>
-        )}
-      </div>
-    </>
+      )}
+    </div>
   );
 }

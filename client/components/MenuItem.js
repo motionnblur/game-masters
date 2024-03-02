@@ -6,8 +6,13 @@ import { useRouter } from "next/navigation";
 
 export default function MenuItem(props) {
   const router = useRouter();
-  const currentstate = useSelector((state) => state.menustate.value);
   const dispatch = useDispatch();
+
+  const currentstate = useSelector((state) => state.menustate.value);
+  const currentUserLoginState = useSelector(
+    (state) => state.userloginstate.value
+  );
+
   const de_activecolor = "bg-slate-100";
   const active_color = "bg-lime-400";
   var current_color = de_activecolor;
@@ -43,6 +48,8 @@ export default function MenuItem(props) {
     <div
       className={`w-8 h-8 ${current_color} rounded-full cursor-pointer hover:scale-90 transition duration-2000 ease-in-out`}
       onClick={() => {
+        if (currentUserLoginState == null || currentUserLoginState == false)
+          return;
         dispatch(setmenustate(props.id));
       }}
     >

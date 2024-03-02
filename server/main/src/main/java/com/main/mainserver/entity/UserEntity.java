@@ -24,5 +24,5 @@ public class UserEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    private List<UserTableEntity> userTableEntity;
+    private List<VideosEntity> videosEntity;
 }

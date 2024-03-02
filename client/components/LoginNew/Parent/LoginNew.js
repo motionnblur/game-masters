@@ -3,13 +3,17 @@ import LoginSignButtons from "../Childrens/LoginSignButtons";
 import LoginBody from "../Childrens/LoginBody";
 import SignupBody from "../Childrens/SignupBody";
 import { validateEmail } from "../../../api/Regex";
-import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setuserloginstate } from "../../../states/userLoginStateSlice";
 
 export default function LoginNew() {
+  const dispatch = useDispatch();
+
   const router = useRouter();
   const [signupState, setSignupState] = useState(false);
+  const [activeIndis, setActiveIndis] = useState(0);
   const urlSign = "http://localhost:8080/api/create_user";
   const urlLogin = "http://localhost:8080/api/login_user";
 
@@ -53,19 +57,16 @@ export default function LoginNew() {
           },
         }
       )
-      .then((response) => {
-        const cookie = getCookie("user-id");
-        //console.log(cookie);
-        //console.log(response);
-
-        if (response.data !== "successful") return;
-
+      .then(() => {
+        dispatch(setuserloginstate(true));
         router.push("/userpage");
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
   const signServer = () => {
-    console.log(nameRefVal, lastNameRef, mailRefVal, passRefVal);
     if (!nameRefVal) return;
     if (!lastNameRef) return;
     if (!mailRefVal) return;
@@ -81,17 +82,26 @@ export default function LoginNew() {
       })
       .then((res) => {
         console.log(res.data);
+        setSignupState(false);
+        setActiveIndis(0);
+      })
+      .catch((err) => {
+        alert(err.response.data);
       });
   };
 
   return (
     <div
-      className="absolute w-[330px] h-[480px] z-30 bg-cyan-500 rounded-md shadow-slate-500
+      className="absolute w-[330px] h-[480px] z-30 bg-[#262626] rounded-md
            shadow-md flex flex-col p-5 gap-3"
     >
       <div className="w-full h-full flex flex-col items-center gap-4">
         <div className="w-full h-12  rounded-md flex flex-row gap-2">
-          <LoginSignButtons setSignupState={setSignupState} />
+          <LoginSignButtons
+            setSignupState={setSignupState}
+            activeIndis={activeIndis}
+            setActiveIndis={setActiveIndis}
+          />
         </div>
         <div className="w-full h-full  rounded-md flex flex-col gap-2">
           {signupState ? (
