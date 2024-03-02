@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const stateSlice = createSlice({
   name: "menustate",
   initialState: {
-    value: 0,
+    value: 1,
   },
   reducers: {
     setmenustate: (state, action) => {
