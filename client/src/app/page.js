@@ -47,7 +47,7 @@ export default function page() {
   const BeforeLogin = () => {
     return (
       <>
-        <div className="absolute -m-2 w-full h-full flex flex-col items-center justify-center sm:gap-3 bg-black z-10 overflow-hidden">
+        <div className="absolute w-full h-full flex flex-col items-center justify-center sm:gap-3 bg-black z-10 overflow-hidden">
           <VideoLayer />
           <CardLayer />
         </div>
