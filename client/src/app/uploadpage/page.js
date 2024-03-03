@@ -100,13 +100,13 @@ export default function page() {
         <form onSubmit={handleSubmit}>
           <div className="w-full h-full flex flex-col items-center justify-center mt-2 gap-2">
             <input
-              class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               type="file"
               name="file"
               onChange={handleFileChange}
             />
             <button
-              class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-3 border border-gray-400 rounded shadow"
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-3 border border-gray-400 rounded shadow"
               type="submit"
               value="Upload"
             >
