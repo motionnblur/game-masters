@@ -4,12 +4,12 @@ WORKDIR /App
 
 COPY .mvn .mvn
 COPY mvnw pom.xml ./
-COPY src src
 
-RUN apk update
-RUN apk upgrade
+RUN apk update && apt upgrade
 RUN apk add --no-cache ffmpeg
 
 RUN ./mvnw dependency:go-offline
+
+COPY src src
 
 CMD ["./mvnw", "spring-boot:run"]
